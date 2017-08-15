@@ -7,7 +7,7 @@ var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 
 
 module.exports = {
-    entry: __dirname + "/app/sketch.js",
+    entry: __dirname + "/app/index.js",
     output: {
         filename: 'working.js',
         path: __dirname + "/build"

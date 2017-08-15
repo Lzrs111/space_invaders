@@ -1,19 +1,10 @@
-function Invader(img,x,y) {
+import BaseClass from "./baseClass.js"
 
-    // this.img = rect
-    this.x = x
-    this.y = y
-    this.xspeed = 10
-    this.yspeed = 1 
 
-    this.draw = ()=>{
-        // image(this.img,this.x,this.y)
-        rect(this.x,this.y,50,50)
-        fill(200,200,200)
-        }
-
-    this.move = ()=>{
-        this.y +=this.yspeed    
+export default class Invader extends BaseClass {
+    constructor(x,y,xspeed,yspeed,width,height,health){
+        super(x,y,xspeed,yspeed,width,height)
+        this.health = health
     }
-
-    }
+    
+}
