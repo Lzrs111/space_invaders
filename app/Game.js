@@ -18,7 +18,6 @@ export default class Game extends React.Component {
             frame:this.state.frame + 1
         })
 
-        //no idea what I'm doing 
         if (this.state.frame > 60){
             this.setState({
                 frame:0

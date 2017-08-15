@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import Invader from "./invader.js"
 import Projectile from "./projectile.js"
 import Ship from "./ship.js"
+import Star from "./star.js"
 import {randomX,randomY} from "./random.js" 
 
 export default class Canvas extends React.Component {
@@ -14,7 +15,8 @@ export default class Canvas extends React.Component {
             ship:"",
             width:800,
             height: 600,
-            projectiles: []
+            projectiles: [],
+            stars: []
             }
         this.eventFunction = this.eventFunction.bind(this)
     }
@@ -22,6 +24,7 @@ export default class Canvas extends React.Component {
         //setup
         var invaders = this.state.invaders
         var ship = new Ship(this.state.width/2,this.state.height-100,0,0,50,50,100)
+        var stars = this.state.stars
 
         //create invaders
         for (var i = 0; i < 5; i++) {
@@ -29,8 +32,16 @@ export default class Canvas extends React.Component {
         }
         this.setState({
             invaders:invaders,
-            ship: ship
+            ship: ship,
+            stars:stars
         })
+
+
+        //create background
+        for (var i = 0; i  < 100; i++) {
+            stars.push(new Star(randomX(this.state.height),randomY(),0,7,0,0))
+        }
+        console.log(stars)
 
         //event handler functions
         document.addEventListener("keydown",this.eventFunction)
@@ -83,7 +94,11 @@ export default class Canvas extends React.Component {
         var invaders = this.state.invaders
         var ship = this.state.ship
         var projectiles = this.state.projectiles
-        context.clearRect(0,0,800,600)
+        var stars = this.state.stars
+        context.fillStyle = "black"
+        context.fillRect(0,0,800,600)
+        context.fillStyle = "white"
+    
 
         //first, change positions of elements
         //player
@@ -113,8 +128,24 @@ export default class Canvas extends React.Component {
             }
         }
 
+
+        //background 
+        for (var i = 0; i < stars.length; i++) {
+            stars[i].move()
+            if (stars[i].y > this.state.height) {
+                stars.splice(i,1)
+                stars.push(new Star(randomX(this.state.height),randomY(),0,10,50,50)) 
+                i--
+            }
+           
+        }
+
         
         //rendering
+        //background
+        for (var i = 0; i < stars.length; i++) {
+            stars[i].render(context)
+        }
         //player
         try {
             ship.render(context)
