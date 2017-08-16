@@ -23,13 +23,18 @@ export default class Canvas extends React.Component {
     componentDidMount() {
         //setup
         var invaders = this.state.invaders
-        var ship = new Ship(this.state.width/2,this.state.height-100,0,0,50,50,100)
+        var ship = new Ship(this.state.width/2,this.state.height-100)
         var stars = this.state.stars
 
         //create invaders
         for (var i = 0; i < 5; i++) {
-           invaders.push(new Invader(randomX(this.state.width),randomY(-100,0),0,10,50,50,100)) 
+            let x = randomX(this.state.width-100)
+            let y = randomY(-500,0)
+            invaders.push(new Invader(x,y))
         }
+
+        console.log(invaders)
+
         this.setState({
             invaders:invaders,
             ship: ship,
@@ -39,7 +44,7 @@ export default class Canvas extends React.Component {
 
         //create background
         for (var i = 0; i  < 100; i++) {
-            stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height),0,7,0,0))
+            stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height)))
         }
 
         //event handler functions
@@ -78,7 +83,8 @@ export default class Canvas extends React.Component {
         }
 
         if (keyCode == 32 && event.repeat !=true) {
-            projectiles.push(new Projectile(ship.x+(ship.width)/2,ship.y+10,0,10,10,10,ship.ammo))
+            projectiles.push(new Projectile(ship.x+50,ship.y+10))
+            console.log(projectiles)
         } 
 
         this.setState({
@@ -117,7 +123,6 @@ export default class Canvas extends React.Component {
         //enemies
         for (var i = 0; i<invaders.length; i++) {
             invaders[i].move()
-            
             if (invaders[i].y > this.state.height) {
                 invaders[i].x = randomX(this.state.width)
                 invaders[i].y = randomY(-100,0)
@@ -140,7 +145,7 @@ export default class Canvas extends React.Component {
             for (var j = 0; j < projectiles.length; j++) {
                 if (detectCollision(invaders[i],projectiles[j])){
                     invaders.splice(i,1)
-                    invaders.push(new Invader(randomX(this.state.width),randomY(-100,0),0,10,50,50,100))
+                    invaders.push(new Invader(randomX(this.state.width-100),randomY(-500,0)))
                     projectiles.splice(j,1)
                 }
             }

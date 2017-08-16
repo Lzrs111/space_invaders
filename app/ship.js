@@ -1,14 +1,16 @@
 import BaseClass from "./baseClass.js"
+import shipImage from "./assets/PNG/playerShip1_blue.png" 
 
 export default class Ship extends BaseClass{
-    constructor(x,y,xspeed,yspeed,width,height,health) {
-        super(x,y,xspeed,yspeed,width,height)
-        this.health = health
-        this.ammo = "basic"
+    constructor(x,y) {
+        super(x,y,0,shipImage)
+        this.xspeed = 0
+
     }
     
     move() {
         this.x +=this.xspeed
     }
+
 
 }

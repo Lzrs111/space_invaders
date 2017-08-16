@@ -1,8 +1,8 @@
 import BaseClass from "./baseClass.js"
 
 export default class Star extends BaseClass{
-    constructor(x,y,xspeed,yspeed,width,height) {
-        super(x,y,xspeed,yspeed)
+    constructor(x,y) {
+        super(x,y,7,"none")
     }
 
     renderSpec(context) {

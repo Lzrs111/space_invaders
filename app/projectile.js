@@ -1,13 +1,8 @@
 import BaseClass from "./baseClass.js"
+import projectileSrc from "./assets/PNG/lasers/laserGreen04.png"
 
 export default class Projectile extends BaseClass {
-    constructor(x,y,xspeed,yspeed,width,height,type){
-        super(x,y,xspeed,yspeed,width,height)
-        this.type=type
+    constructor(x,y){
+        super(x,y,-10,projectileSrc)
     }
-
-    move() {
-        this.y -=this.yspeed
-    }
-
 }
