@@ -4,7 +4,7 @@ import Invader from "./invader.js"
 import Projectile from "./projectile.js"
 import Ship from "./ship.js"
 import Star from "./star.js"
-import {randomX,randomY} from "./random.js" 
+import {randomX,randomY,detectCollision} from "./random.js" 
 
 export default class Canvas extends React.Component {
     constructor(props){
@@ -28,7 +28,7 @@ export default class Canvas extends React.Component {
 
         //create invaders
         for (var i = 0; i < 5; i++) {
-           invaders.push(new Invader(randomX(this.state.height),randomY(),0,10,50,50,100)) 
+           invaders.push(new Invader(randomX(this.state.width),randomY(-100,0),0,10,50,50,100)) 
         }
         this.setState({
             invaders:invaders,
@@ -39,9 +39,8 @@ export default class Canvas extends React.Component {
 
         //create background
         for (var i = 0; i  < 100; i++) {
-            stars.push(new Star(randomX(this.state.height),randomY(),0,7,0,0))
+            stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height),0,7,0,0))
         }
-        console.log(stars)
 
         //event handler functions
         document.addEventListener("keydown",this.eventFunction)
@@ -69,11 +68,9 @@ export default class Canvas extends React.Component {
             switch (keyCode) {
                 case 37:
                     ship.xspeed = -5
-                    console.log("moving left")
                     break;
                 case 39:
                     ship.xspeed = 5
-                    console.log("moving right")
                     break;
             } 
         }  else if (eType == "keyup" && keyCode !=32) {
@@ -105,7 +102,7 @@ export default class Canvas extends React.Component {
         try {
             ship.move()
         } catch (e){
-            console.log(e)
+            //nothing
         }
 
         //projectiles
@@ -122,9 +119,8 @@ export default class Canvas extends React.Component {
             invaders[i].move()
             
             if (invaders[i].y > this.state.height) {
-                invaders.splice(i,1)
-                invaders.push(new Invader(randomX(this.state.height),randomY(),0,10,50,50,100)) 
-                i--
+                invaders[i].x = randomX(this.state.width)
+                invaders[i].y = randomY(-100,0)
             }
         }
 
@@ -133,11 +129,25 @@ export default class Canvas extends React.Component {
         for (var i = 0; i < stars.length; i++) {
             stars[i].move()
             if (stars[i].y > this.state.height) {
-                stars.splice(i,1)
-                stars.push(new Star(randomX(this.state.height),randomY(),0,10,50,50)) 
-                i--
+                stars[i].x = randomX(this.state.width)
+                stars[i].y = randomY(0,0)
             }
            
+        }
+
+        //detect collision
+        for (var i = 0; i < invaders.length; i++) {
+            for (var j = 0; j < projectiles.length; j++) {
+                if (detectCollision(invaders[i],projectiles[j])){
+                    invaders.splice(i,1)
+                    invaders.push(new Invader(randomX(this.state.width),randomY(-100,0),0,10,50,50,100))
+                    projectiles.splice(j,1)
+                }
+            }
+
+            if (detectCollision(invaders[i],ship))
+                console.log("collision!")
+            
         }
 
         

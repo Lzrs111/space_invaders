@@ -4,13 +4,21 @@ function randomX(higher) {
     return Math.floor((Math.random()*higher))
 }
 
-function randomY() {
-    return Math.floor(Math.random()*-100)    
+function randomY(min,max) {
+    return Math.floor((Math.random()*(max))+(min))    
 }
 
 function detectCollision(first,second) {
-    console.log("lol")
+    var x1 = first.x
+    var x2 = second.x
+    var y1 = first.y
+    var y2 = second.y
+    if(x2 > x1 && x2 < x1+first.width && y2 > y1 && y2 < y1+first.height) {
+        return true 
+    }  else {
+       return false
+    }
 }
 
 
-module.exports = {randomX,randomY}
+module.exports = {randomX,randomY,detectCollision}
