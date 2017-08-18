@@ -83,8 +83,8 @@ export default class Canvas extends React.Component {
             ship.xspeed = 0
         }
 
-        if (keyCode == 32 && event.repeat !=true) {
-            projectiles.push(new Projectile(ship.x+50,ship.y+10))
+        if (keyCode == 32 && event.repeat!=true) {
+            ship.shoot(projectiles)
         } 
 
         this.setState({
@@ -167,11 +167,15 @@ export default class Canvas extends React.Component {
         //powerups
         for (var i = 0; i < powerups.length; i++) {
             if (detectCollision(ship,powerups[i])){
+                if (powerups[i].type == "health"){
+                    ship.health +=20
+                } else if (powerups[i].type == "ammo upgrade" && ship.ammo < 2){
+                    ship.ammo +=1
+                }
                 powerups.splice(i,1)
+
                 console.log("POWERUP LOL")
-                ship.health +=20
-                console.log(ship.health)
-            }
+           }            
         }
 
         //spawn powerups
