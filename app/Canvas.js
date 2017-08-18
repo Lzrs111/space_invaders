@@ -1,6 +1,8 @@
+import createInvader from "./createInvader.js"
 import React from "react"
 import ReactDOM from "react-dom" 
 import Invader from "./invader.js"
+import Powerup from "./powerUp.js"
 import Projectile from "./projectile.js"
 import Ship from "./ship.js"
 import Star from "./star.js"
@@ -16,7 +18,8 @@ export default class Canvas extends React.Component {
             width:800,
             height: 600,
             projectiles: [],
-            stars: []
+            stars: [],
+            powerups: []
             }
         this.eventFunction = this.eventFunction.bind(this)
     }
@@ -28,9 +31,7 @@ export default class Canvas extends React.Component {
 
         //create invaders
         for (var i = 0; i < 5; i++) {
-            let x = randomX(this.state.width-100)
-            let y = randomY(-500,0)
-            invaders.push(new Invader(x,y))
+            createInvader(invaders,this.state.width-100,-500,0)
         }
 
         console.log(invaders)
@@ -84,7 +85,6 @@ export default class Canvas extends React.Component {
 
         if (keyCode == 32 && event.repeat !=true) {
             projectiles.push(new Projectile(ship.x+50,ship.y+10))
-            console.log(projectiles)
         } 
 
         this.setState({
@@ -98,6 +98,7 @@ export default class Canvas extends React.Component {
         var ship = this.state.ship
         var projectiles = this.state.projectiles
         var stars = this.state.stars
+        var powerups = this.state.powerups
         context.fillStyle = "black"
         context.fillRect(0,0,800,600)
         context.fillStyle = "white"
@@ -124,13 +125,13 @@ export default class Canvas extends React.Component {
         for (var i = 0; i<invaders.length; i++) {
             invaders[i].move()
             if (invaders[i].y > this.state.height) {
-                invaders[i].x = randomX(this.state.width)
-                invaders[i].y = randomY(-100,0)
+                invaders.splice(i,1)
+                createInvader(invaders,this.state.width,-500,0)
+                i--
             }
         }
 
-
-        //background 
+        //stars
         for (var i = 0; i < stars.length; i++) {
             stars[i].move()
             if (stars[i].y > this.state.height) {
@@ -140,19 +141,42 @@ export default class Canvas extends React.Component {
            
         }
 
+        //powerups
+        for (var i = 0; i < powerups.length; i++) {
+            powerups[i].move()
+        }
+
         //detect collision
+        //enemis
         for (var i = 0; i < invaders.length; i++) {
             for (var j = 0; j < projectiles.length; j++) {
                 if (detectCollision(invaders[i],projectiles[j])){
                     invaders.splice(i,1)
-                    invaders.push(new Invader(randomX(this.state.width-100),randomY(-500,0)))
+                    createInvader(invaders,this.state.width-100,-500,0)
                     projectiles.splice(j,1)
                 }
             }
 
-            if (detectCollision(invaders[i],ship))
-                console.log("collision!")
+            if (detectCollision(invaders[i],ship)) {
+                    ship.health -=20
+                    console.log(ship.health) 
+                
+            }
             
+        }
+        //powerups
+        for (var i = 0; i < powerups.length; i++) {
+            if (detectCollision(ship,powerups[i])){
+                powerups.splice(i,1)
+                console.log("POWERUP LOL")
+                ship.health +=20
+                console.log(ship.health)
+            }
+        }
+
+        //spawn powerups
+        if ((Math.floor(Math.random()*100))>98) {
+            powerups.push(new Powerup(randomX(this.state.width),10))
         }
 
         
@@ -176,11 +200,15 @@ export default class Canvas extends React.Component {
         for (var i = 0; i < invaders.length; i++) {
             invaders[i].render(context)
         }
+        //powerups
+        for (var i = 0; i < powerups.length; i++) {
+            powerups[i].render(context)
+        }
 
     }
     render() {
         return(
-           <canvas width={800} height={600}></canvas> 
+           <canvas width={this.state.width} height={this.state.height}></canvas> 
         )
     }
 }
