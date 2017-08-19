@@ -19,16 +19,16 @@ export default class Ship extends BaseClass{
     shoot(array) {
         switch (this.ammo) {
             case 0:
-                array.push(new Projectile(this.x+50,this.y))
+                array.push(new Projectile((this.x+this.image.width/2)-4,this.y,"player"))
                 break;
             case 1:
-                array.push(new Projectile(this.x,this.y))
-                array.push(new Projectile(this.x+100,this.y))
+                array.push(new Projectile(this.x,this.y,"player"))
+                array.push(new Projectile(this.x + this.image.width,this.y,"player"))
                 break
             case 2:
-                array.push(new Projectile(this.x+50,this.y))
-                array.push(new Projectile(this.x,this.y))
-                array.push(new Projectile(this.x+100,this.y))
+                array.push(new Projectile(this.x,this.y,"player"))
+                array.push(new Projectile(this.x + this.image.width,this.y,"player"))
+                array.push(new Projectile((this.x+this.image.width/2)-4,this.y,"player"))
                 break
             default:
                 break;

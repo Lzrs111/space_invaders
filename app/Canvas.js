@@ -13,13 +13,15 @@ export default class Canvas extends React.Component {
         super()
         this.state = {
             frame:props.frame,
+            gameOver: props.gameOver,
             invaders:[],
             ship:"",
             width:800,
             height: 600,
             projectiles: [],
             stars: [],
-            powerups: []
+            powerups: [],
+            enemyProjectiles: []
             }
         this.eventFunction = this.eventFunction.bind(this)
     }
@@ -54,15 +56,17 @@ export default class Canvas extends React.Component {
 
 
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
-        this.paint(ctx)
+        this.gameLoop(ctx)
 
     }
     componentDidUpdate() {
         var context = ReactDOM.findDOMNode(this).getContext('2d');
-        this.paint(context);
+        if (!this.state.gameOver){
+            this.gameLoop(context);
+        } else {
+            this.endLoop(context)
+        }
     }
- 
- 
     eventFunction(event) {
         var keyCode = event.keyCode
         var eType = event.type
@@ -83,22 +87,25 @@ export default class Canvas extends React.Component {
             ship.xspeed = 0
         }
 
-        if (keyCode == 32 && event.repeat!=true) {
+        if (keyCode == 32 && event.repeat!=true && eType!="keyup") {
             ship.shoot(projectiles)
+            console.log(ship.image.width,ship.image.height)
         } 
 
-        this.setState({
+        /* this.setState({
             projectiles:projectiles,
             ship:ship
-        })
+        }) */
 
     }
-    paint(context) {
+    gameLoop(context) {
         var invaders = this.state.invaders
         var ship = this.state.ship
         var projectiles = this.state.projectiles
         var stars = this.state.stars
         var powerups = this.state.powerups
+        var enemyProjectiles = this.state.enemyProjectiles
+        var gameOver = this.state.gameOver
         context.fillStyle = "black"
         context.fillRect(0,0,800,600)
         context.fillStyle = "white"
@@ -117,6 +124,14 @@ export default class Canvas extends React.Component {
            projectiles[i].move()
            if (projectiles[i].y <0){
                projectiles.splice(i,1)
+               i--
+            }
+        }
+
+        for (var i = 0; i < enemyProjectiles.length; i++) {
+            enemyProjectiles[i].move()
+            if (enemyProjectiles[i].y > this.state.height){
+               enemyProjectiles.splice(i,1)
                i--
             }
         }
@@ -146,24 +161,59 @@ export default class Canvas extends React.Component {
             powerups[i].move()
         }
 
+
+        //spawn powerups
+        if ((Math.floor(Math.random()*100))>98) {
+            powerups.push(new Powerup(randomX(this.state.width),10))
+        }
+
+        //enemy projectiles
+        for (var i = 0; i < invaders.length; i++) {
+            if (invaders[i].y >=0){
+                if (invaders[i].shootFrame < 30){
+                    invaders[i].shootFrame +=1
+                } else {
+                    invaders[i].shootFrame = 0
+                    invaders[i].shoot(enemyProjectiles)
+                }
+            }
+        }
+
+         
+
         //detect collision
         //enemis
         for (var i = 0; i < invaders.length; i++) {
             for (var j = 0; j < projectiles.length; j++) {
                 if (detectCollision(invaders[i],projectiles[j])){
-                    invaders.splice(i,1)
-                    createInvader(invaders,this.state.width-100,-500,0)
+                    invaders[i].health +=-25
+                    console.log(invaders[i].health)
                     projectiles.splice(j,1)
+                    if (invaders[i].health <= 0){
+                        invaders.splice(i,1)
+                        createInvader(invaders,this.state.width-100,-500,0)
+                    } 
                 }
             }
 
             if (detectCollision(invaders[i],ship)) {
                     ship.health -=20
-                    console.log(ship.health) 
-                
+                    invaders.splice(i,1)
+                    createInvader(invaders,this.state.width-100,-500,0)
             }
-            
         }
+
+        for (var i = 0; i < enemyProjectiles.length; i++) {
+            if (detectCollision(ship,enemyProjectiles[i])){
+                ship.health +=-20
+                enemyProjectiles.splice(i,1)
+            }
+        }
+
+        if (ship.health <=0){
+            this.props.end()
+        }
+
         //powerups
         for (var i = 0; i < powerups.length; i++) {
             if (detectCollision(ship,powerups[i])){
@@ -173,15 +223,9 @@ export default class Canvas extends React.Component {
                     ship.ammo +=1
                 }
                 powerups.splice(i,1)
-
-                console.log("POWERUP LOL")
            }            
         }
 
-        //spawn powerups
-        if ((Math.floor(Math.random()*100))>98) {
-            powerups.push(new Powerup(randomX(this.state.width),10))
-        }
 
         
         //rendering
@@ -199,7 +243,9 @@ export default class Canvas extends React.Component {
         for (var i = 0; i < projectiles.length; i++) {
             projectiles[i].render(context)
         }
-
+        for (var i = 0; i < enemyProjectiles.length; i++) {
+            enemyProjectiles[i].render(context)
+        }
         //enemies
         for (var i = 0; i < invaders.length; i++) {
             invaders[i].render(context)
@@ -209,6 +255,15 @@ export default class Canvas extends React.Component {
             powerups[i].render(context)
         }
 
+    }
+    endLoop(context) {
+        var stars = this.state.stars
+        context.fillStyle = "black"
+        context.fillRect(0,0,800,600)
+        context.fillStyle = "white"
+        for (var i = 0; i < stars.length; i++) {
+            stars[i].render(context)
+        }
     }
     render() {
         return(

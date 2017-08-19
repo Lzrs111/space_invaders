@@ -13,8 +13,8 @@ function detectCollision(first,second) {
     var x2 = second.x
     var y1 = first.y
     var y2 = second.y
-                     //invader width            //invader height
-    if(x2 > x1 && x2 < x1+50 && y2 > y1 && y2 < y1+84) {
+                           //invader width            //invader height
+    if(x2 > x1 && x2 < x1+first.image.width && y2 > y1 && y2 < y1+first.image.height) {
         return true 
     }  else {
        return false
