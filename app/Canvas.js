@@ -5,12 +5,14 @@ import Invader from "./invader.js"
 import Powerup from "./powerUp.js"
 import Projectile from "./projectile.js"
 import Ship from "./ship.js"
+import Splash from "./splash.js"
 import Star from "./star.js"
 import {randomX,randomY,detectCollision} from "./random.js" 
 
 export default class Canvas extends React.Component {
     constructor(props){
         super()
+        this.splashes = []
         this.state = {
             frame:props.frame,
             gameOver: props.gameOver,
@@ -187,7 +189,7 @@ export default class Canvas extends React.Component {
             for (var j = 0; j < projectiles.length; j++) {
                 if (detectCollision(invaders[i],projectiles[j])){
                     invaders[i].health +=-25
-                    console.log(invaders[i].health)
+                    this.splashes.push(new Splash(projectiles[j].x,projectiles[j].y,"player"))
                     projectiles.splice(j,1)
                     if (invaders[i].health <= 0){
                         invaders.splice(i,1)
@@ -206,6 +208,7 @@ export default class Canvas extends React.Component {
         for (var i = 0; i < enemyProjectiles.length; i++) {
             if (detectCollision(ship,enemyProjectiles[i])){
                 ship.health +=-20
+                this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
                 enemyProjectiles.splice(i,1)
             }
         }
@@ -226,6 +229,15 @@ export default class Canvas extends React.Component {
            }            
         }
 
+        //splash lifecycle
+        if (this.splashes.length > 0){
+            for (var i = 0; i < this.splashes.length; i++) {
+                this.splashes[i].lifespan+=1
+                if (this.splashes[i].lifespan > 10){
+                    this.splashes.splice(i,1)
+                }
+             }
+        }
 
         
         //rendering
@@ -245,6 +257,11 @@ export default class Canvas extends React.Component {
         }
         for (var i = 0; i < enemyProjectiles.length; i++) {
             enemyProjectiles[i].render(context)
+        }
+        if (this.splashes.length > 0){
+            for (var i = 0; i < this.splashes.length; i++) {
+                this.splashes[i].render(context)
+            }
         }
         //enemies
         for (var i = 0; i < invaders.length; i++) {

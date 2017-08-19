@@ -1,1 +1,1 @@
-TODO: add shield powerup,add player lives, add score calculation, add ability to die lol
+TODO: add shield powerup,add player lives, add score calculation,add splash when projectiles and enemies/player collide
