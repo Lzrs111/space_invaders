@@ -1,6 +1,7 @@
 import BaseClass from "./baseClass.js"
 import Projectile from "./projectile.js"
 import shipImage from "./assets/PNG/playerShip1_blue.png" 
+import Shield from "./shield.js"
 
 export default class Ship extends BaseClass{
     constructor(x,y) {
@@ -8,12 +9,16 @@ export default class Ship extends BaseClass{
         this.xspeed = 0
         this.health = 100
         this.shield = false
-        this.ammo = 0
+        this.ammo = 0,
+        this.lives =4 
 
     }
     
     move() {
         this.x +=this.xspeed
+        if (this.shield){
+            this.shield.move()
+        }
     }
 
     shoot(array) {
@@ -36,5 +41,15 @@ export default class Ship extends BaseClass{
 
     }
 
+    shieldUp(x,y) {
+        this.shield = new Shield(x,y)
+    }
+
+    render(context) {
+        context.drawImage(this.image,this.x,this.y)
+        if (this.shield){
+            context.drawImage(this.shield.image,this.x,this.y)
+        }
+    }
 
 }

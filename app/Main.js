@@ -6,7 +6,7 @@ export default class Main extends React.Component {
     constructor(){
         super()
         this.state = {
-            gameStarted:false
+            gameStarted:true
             }
         this.startGame = this.startGame.bind(this)
         this.endGame = this.endGame.bind(this)

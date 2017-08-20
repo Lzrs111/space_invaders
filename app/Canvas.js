@@ -4,6 +4,7 @@ import ReactDOM from "react-dom"
 import Invader from "./invader.js"
 import Powerup from "./powerUp.js"
 import Projectile from "./projectile.js"
+import renderUI from "./renderUI.js"
 import Ship from "./ship.js"
 import Splash from "./splash.js"
 import Star from "./star.js"
@@ -34,7 +35,7 @@ export default class Canvas extends React.Component {
         var stars = this.state.stars
 
         //create invaders
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 10; i++) {
             createInvader(invaders,this.state.width-100,-500,0)
         }
 
@@ -199,7 +200,11 @@ export default class Canvas extends React.Component {
             }
 
             if (detectCollision(invaders[i],ship)) {
-                    ship.health -=20
+                    if (ship.shield){
+                        ship.shield = false
+                    } else {
+                        ship.health -=20
+                    }
                     invaders.splice(i,1)
                     createInvader(invaders,this.state.width-100,-500,0)
             }
@@ -207,14 +212,27 @@ export default class Canvas extends React.Component {
 
         for (var i = 0; i < enemyProjectiles.length; i++) {
             if (detectCollision(ship,enemyProjectiles[i])){
-                ship.health +=-20
+                if (ship.shield) {
+                    ship.shield.health +=-20
+                    if (ship.shield.health <=0){
+                        ship.shield = false
+                    } else {
+                    ship.shield.update()
+                    }
+                } else {
+                    ship.health +=-20
+                }
                 this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
                 enemyProjectiles.splice(i,1)
             }
         }
 
         if (ship.health <=0){
-            this.props.end()
+            ship.lives -=1
+            ship.health = 100
+            if (ship.lives==0){
+                this.props.end()
+            }
         }
 
         //powerups
@@ -224,6 +242,8 @@ export default class Canvas extends React.Component {
                     ship.health +=20
                 } else if (powerups[i].type == "ammo upgrade" && ship.ammo < 2){
                     ship.ammo +=1
+                } else {
+                    ship.shieldUp(ship.x,ship.y)
                 }
                 powerups.splice(i,1)
            }            
@@ -245,6 +265,8 @@ export default class Canvas extends React.Component {
         for (var i = 0; i < stars.length; i++) {
             stars[i].render(context)
         }
+        //UI
+        renderUI(context,ship)
         //player
         try {
             ship.render(context)

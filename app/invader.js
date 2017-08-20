@@ -5,11 +5,12 @@ import InvaderImage3 from "./assets/PNG/Enemies/enemyGreen1.png"
 import Projectile from "./projectile.js"
 
 var stats = {
-    //num : [speed,health,source]
-    0:[5,200,InvaderImage1],
-    1:[7,100,InvaderImage2],
-    2:[2,300,InvaderImage3]
+    //num : [speed,health,source,[x coordinates to render projectiles]]
+    0:[5,200,InvaderImage1,[18,50,85]],
+    1:[7,100,InvaderImage2,[32,69]],
+    2:[2,300,InvaderImage3,[32,62]]
 }
+
 
 export default class Invader extends BaseClass {
     constructor(x,y){
@@ -26,8 +27,11 @@ export default class Invader extends BaseClass {
         this.health = health 
         this.status = 0
         this.shootFrame = 0
+        this.shootCoords = invader[3]
     }
     shoot(array) {
-        array.push(new Projectile(this.x,this.y,"not player"))
+        for (var i = 0; i < this.shootCoords.length; i++) {
+            array.push(new Projectile(this.x + this.shootCoords[i],this.y,"not player"))
+        }
     }
 }

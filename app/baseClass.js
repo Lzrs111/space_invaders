@@ -6,7 +6,7 @@ export default class BaseClass {
         this.y = y
         this.speed = speed
         this.image = new Image()
-        this.imagesrc = imagesrc
+        this.image.src = imagesrc
     }
 
     move() {
@@ -14,7 +14,6 @@ export default class BaseClass {
     }
 
     render(context) {
-        this.image.src = this.imagesrc
         return context.drawImage(this.image,this.x,this.y)
     }
 }
