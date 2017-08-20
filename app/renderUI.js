@@ -1,4 +1,6 @@
 import PlayerLife from "./assets/png/ui/playerLife1_blue.png"
+import heartIcon from "./assets/png/ui/heartIcon.png"
+import shieldIcon from "./assets/png/power-ups/shield-blue.png"
 import Number0 from "./assets/png/ui/numeral0.png"
 import Number1 from "./assets/png/ui/numeral1.png"
 import Number2 from "./assets/png/ui/numeral2.png"
@@ -25,20 +27,71 @@ var numerals = {
     "X": NumberX,
 }
 
+//this function converts a number into images
+function convertToHealth(number,array) {
+    number = number.toString().split("")
+    for (var i = 0; i < number.length; i++) {
+        number[i] = parseInt(number[i])
+        array[i] = numberImages[number[i]]
+    }
+}
 
-
-export default function renderUI(context,ship) {
-    var X = new Image()
-    var health = new Image()
+    //variables used in UI
+    var heart = new Image()
+    var shield = new Image()
+    var health = new Array(3) 
+    var shieldHP = new Array(3)
     var lifeIcon = new Image()
+    var numberImages = new Array(11)
 
-   lifeIcon.src = PlayerLife
-   health.src = ship.health 
-   X.src = NumberX
+
+    lifeIcon.src = PlayerLife
+    heart.src = heartIcon
+    shield.src = shieldIcon
+
+    for (var i = 0; i < Object.keys(numerals).length; i++) {
+       numberImages[i] = new Image()
+       numberImages[i].src = numerals[i]
+    }
 
     
-   //render lives
-   for (var i = 10; i < ship.lives*35+10; i+=35) {
-    context.drawImage(lifeIcon,i,10)
-   }
+
+export default function renderUI(context,ship) {
+    //render lives
+    for (var i = 10; i < ship.lives*35+10; i+=35) {
+        context.drawImage(lifeIcon,i,10)
+    }
+    
+    //render HP
+    try {
+        context.drawImage(heart,575,10)
+        convertToHealth(ship.health,health)
+        var index = 0
+        //determine whether or not to render the last number
+        var len = (ship.health < 100) ? health.length - 1 : health.length
+        for (var i = 600; i < len*25+600; i+=25) {
+            context.drawImage(health[index],i,10) 
+            index++   
+        }
+    } catch(e) {
+       //nothing
+    }
+
+    //render shield HP
+    if (ship.shield){
+        try {
+            context.drawImage(shield,675,10)
+            convertToHealth(ship.shield.health,shieldHP)
+            var index = 0
+            //determine whether or not to render the last number
+            var len = (ship.shield.health < 100) ? shieldHP.length - 1 : shieldHP.length
+            for (var i = 700; i < len*25+700; i+=25) {
+                context.drawImage(shieldHP[index],i,10) 
+                index++   
+            }
+        } catch(e) {
+           //nothing
+        }
+    }
+
 }

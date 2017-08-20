@@ -31,7 +31,7 @@ export default class Invader extends BaseClass {
     }
     shoot(array) {
         for (var i = 0; i < this.shootCoords.length; i++) {
-            array.push(new Projectile(this.x + this.shootCoords[i],this.y,"not player"))
+            array.push(new Projectile(this.x + this.shootCoords[i],this.y + this.image.height,"not player"))
         }
     }
 }

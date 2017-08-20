@@ -17,7 +17,7 @@ export default class Ship extends BaseClass{
     move() {
         this.x +=this.xspeed
         if (this.shield){
-            this.shield.move()
+            this.shield.move(this.xspeed)
         }
     }
 
@@ -41,14 +41,16 @@ export default class Ship extends BaseClass{
 
     }
 
-    shieldUp(x,y) {
+    shieldUp() {
+        let x = this.x -25 
+        let y = this.y -25
         this.shield = new Shield(x,y)
     }
 
     render(context) {
         context.drawImage(this.image,this.x,this.y)
         if (this.shield){
-            context.drawImage(this.shield.image,this.x,this.y)
+            context.drawImage(this.shield.image,this.shield.x,this.shield.y)
         }
     }
 
