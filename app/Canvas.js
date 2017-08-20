@@ -19,8 +19,8 @@ export default class Canvas extends React.Component {
             gameOver: props.gameOver,
             invaders:[],
             ship:"",
-            width:800,
-            height: 600,
+            width:1400,
+            height: 800,
             projectiles: [],
             stars: [],
             powerups: [],
@@ -110,7 +110,7 @@ export default class Canvas extends React.Component {
         var enemyProjectiles = this.state.enemyProjectiles
         var gameOver = this.state.gameOver
         context.fillStyle = "black"
-        context.fillRect(0,0,800,600)
+        context.fillRect(0,0,this.state.width,this.state.height)
         context.fillStyle = "white"
     
 
@@ -302,7 +302,7 @@ export default class Canvas extends React.Component {
     endLoop(context) {
         var stars = this.state.stars
         context.fillStyle = "black"
-        context.fillRect(0,0,800,600)
+        context.fillRect(0,0,this.state.width,this.state.height)
         context.fillStyle = "white"
         for (var i = 0; i < stars.length; i++) {
             stars[i].render(context)
