@@ -283,22 +283,23 @@ export default class Canvas extends React.Component {
         }
         //enemy projectiles with player
         for (var i = 0; i < enemyProjectiles.length; i++) {
-            if (detectCollision(ship.shield,enemyProjectiles[i])){
-                if (ship.shield) {
+            if (ship.shield) {
+                if (detectCollision(ship.shield,enemyProjectiles[i])){
                     ship.shield.health +=-20
                     this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
                     enemyProjectiles.splice(i,1)
                     if (ship.shield.health <=0){
                         ship.shield = false
                     } else {
-                        ship.shield.update()
+                    ship.shield.update()
                     }
-                } else {
-                    ship.health +=-20
-                    this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
-                    enemyProjectiles.splice(i,1) 
                 }
             }
+            else if (detectCollision(ship,enemyProjectiles[i])){
+                    ship.health +=-20
+                    this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
+                    enemyProjectiles.splice(i,1)
+                }
             
         }
         //check player health after possible collision
