@@ -38,49 +38,41 @@ export default class Canvas extends React.Component {
     }
 
     //component lifecycle methods
-    //call either gameloop or end loop
     componentDidMount() {
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
+        //setup
+        var invaders = this.state.invaders
+        var ship = new Ship(this.state.width/2,this.state.height-100)
+        var stars = this.state.stars
+
+        //create invaders
+        for (var i = 0; i < 7; i++) {
+            createInvader(invaders,this.state.width-100,-500,0)
+        }
+
+        console.log(invaders)
+
+        this.setState({
+            invaders:invaders,
+            ship: ship,
+            stars:stars
+        })
+
+
+        //create background
+        for (var i = 0; i  < 100; i++) {
+            stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height)))
+        }
+
+        //event handler functions
         if (!this.state.gameOver) {
-            //setup
-            var invaders = this.state.invaders
-            var ship = new Ship(this.state.width/2,this.state.height-100)
-            var stars = this.state.stars
-
-            //create invaders
-            for (var i = 0; i < 7; i++) {
-                createInvader(invaders,this.state.width-100,-500,0)
-            }
-
-            console.log(invaders)
-
-            this.setState({
-                invaders:invaders,
-                ship: ship,
-                stars:stars
-            })
-
-
-            //create background
-            for (var i = 0; i  < 100; i++) {
-                stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height)))
-            }
-
-            //event handler functions
             document.addEventListener("keydown",this.keyboardEvents)
             document.addEventListener("keyup",this.keyboardEvents)
             document.addEventListener("touchstart",this.touchEvents,{passive: false})
             document.addEventListener("touchmove",this.touchEvents)
             document.addEventListener("touchend",this.touchEvents)
-
-
-            this.gameLoop(ctx)
-         } else {
-             this.endLoop(ctx)
-         }
         }
-
-
+    }
     componentDidUpdate() {
         var context = ReactDOM.findDOMNode(this).getContext('2d');
         if (!this.state.gameOver){
@@ -162,6 +154,9 @@ export default class Canvas extends React.Component {
             tx = touches.item(0).screenX
             console.log(deltaX,ship.x)
             ship.x -=deltaX
+            if (ship.shield) {
+                ship.shield.x-=deltaX
+            }
         }
         if (eType == "touchend"){
             ship.shooting = false
@@ -236,7 +231,7 @@ export default class Canvas extends React.Component {
 
 
         //spawn powerups         
-        if ((Math.floor(Math.random()*1000))>998) {
+        if ((Math.floor(Math.random()*100))>98) {
             powerups.push(new Powerup(randomX(this.state.width),10))
         }
 
@@ -288,23 +283,22 @@ export default class Canvas extends React.Component {
         }
         //enemy projectiles with player
         for (var i = 0; i < enemyProjectiles.length; i++) {
-            if (ship.shield) {
-                if (detectCollision(ship.shield,enemyProjectiles[i])){
+            if (detectCollision(ship.shield,enemyProjectiles[i])){
+                if (ship.shield) {
                     ship.shield.health +=-20
                     this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
                     enemyProjectiles.splice(i,1)
                     if (ship.shield.health <=0){
                         ship.shield = false
                     } else {
-                    ship.shield.update()
+                        ship.shield.update()
                     }
-                }
-            }
-            else if (detectCollision(ship,enemyProjectiles[i])){
+                } else {
                     ship.health +=-20
                     this.splashes.push(new Splash(enemyProjectiles[i].x,enemyProjectiles[i].y,"not player"))
-                    enemyProjectiles.splice(i,1)
+                    enemyProjectiles.splice(i,1) 
                 }
+            }
             
         }
         //check player health after possible collision
@@ -319,13 +313,7 @@ export default class Canvas extends React.Component {
         //powerups
         for (var i = 0; i < powerups.length; i++) {
             if (detectCollision(ship,powerups[i])){
-                if (powerups[i].type == "health"){
-                    ship.health +=20
-                } else if (powerups[i].type == "ammo upgrade" && ship.ammo < 2){
-                    ship.ammo +=1
-                } else {
-                    ship.shieldUp()
-                }
+                ship.pickup(powerups[i])
                 powerups.splice(i,1)
            }            
         }
@@ -347,7 +335,7 @@ export default class Canvas extends React.Component {
             stars[i].render(context)
         }
         //UI
-        renderUI(context,ship)
+        renderUI(context,ship,this.state.width,this.state.height)
         //player
         try {
             ship.render(context)

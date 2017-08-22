@@ -13,6 +13,7 @@ export default class Ship extends BaseClass{
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
+        this.baseAttackSpeed = 30
         this.attackSpeed = 30
 
     }
@@ -58,5 +59,27 @@ export default class Ship extends BaseClass{
             context.drawImage(this.shield.image,this.shield.x,this.shield.y)
         }
     }
+
+   pickup(powerup) {
+       switch(powerup.type) {
+           case "health":
+                this.health +=20
+                break;
+            case "ammo upgrade":
+                if (this.ammo <2){
+                    this.ammo +=1
+                }
+                break;
+            case "shield":
+                this.shieldUp()
+                break
+            case "attack speed":
+            if (this.attackSpeed > this.baseAttackSpeed*0.5) {
+                this.attackSpeed = this.attackSpeed - Math.floor(this.baseAttackSpeed*0.2) //attack faster 
+                console.log(this.attackSpeed)
+                break
+            }
+       }
+   }
 
 }

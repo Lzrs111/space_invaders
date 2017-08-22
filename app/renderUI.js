@@ -56,7 +56,7 @@ function convertToHealth(number,array) {
 
     
 
-export default function renderUI(context,ship) {
+export default function renderUI(context,ship,width,height) {
     //render lives
     for (var i = 10; i < ship.lives*35+10; i+=35) {
         context.drawImage(lifeIcon,i,10)
@@ -64,12 +64,12 @@ export default function renderUI(context,ship) {
     
     //render HP
     try {
-        context.drawImage(heart,575,10)
+        context.drawImage(heart,width-225,10)
         convertToHealth(ship.health,health)
         var index = 0
         //determine whether or not to render the last number
         var len = (ship.health < 100) ? health.length - 1 : health.length
-        for (var i = 600; i < len*25+600; i+=25) {
+        for (var i = width-200; i < len*25+width-200; i+=25) {
             context.drawImage(health[index],i,10) 
             index++   
         }
@@ -80,12 +80,12 @@ export default function renderUI(context,ship) {
     //render shield HP
     if (ship.shield){
         try {
-            context.drawImage(shield,675,10)
+            context.drawImage(shield,width-125,10)
             convertToHealth(ship.shield.health,shieldHP)
             var index = 0
             //determine whether or not to render the last number
             var len = (ship.shield.health < 100) ? shieldHP.length - 1 : shieldHP.length
-            for (var i = 700; i < len*25+700; i+=25) {
+            for (var i = width-100; i < len*25+width-100; i+=25) {
                 context.drawImage(shieldHP[index],i,10) 
                 index++   
             }
