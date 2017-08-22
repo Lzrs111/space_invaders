@@ -10,6 +10,10 @@ import Splash from "./splash.js"
 import Star from "./star.js"
 import {randomX,randomY,detectCollision} from "./random.js" 
 
+
+var tx = 0 
+var ty = 0
+
 export default class Canvas extends React.Component {
     constructor(props){
         super()
@@ -24,44 +28,57 @@ export default class Canvas extends React.Component {
             projectiles: [],
             stars: [],
             powerups: [],
-            enemyProjectiles: []
+            enemyProjectiles: [],
+            touchX:0,
+            touchY: 0
             }
-        this.eventFunction = this.eventFunction.bind(this)
+        this.keyboardEvents = this.keyboardEvents.bind(this)
+        this.touchEvents = this.touchEvents.bind(this)
+        
     }
+
+    //component lifecycle methods
     componentDidMount() {
-        //setup
-        var invaders = this.state.invaders
-        var ship = new Ship(this.state.width/2,this.state.height-100)
-        var stars = this.state.stars
-
-        //create invaders
-        for (var i = 0; i < 7; i++) {
-            createInvader(invaders,this.state.width-100,-500,0)
-        }
-
-        console.log(invaders)
-
-        this.setState({
-            invaders:invaders,
-            ship: ship,
-            stars:stars
-        })
-
-
-        //create background
-        for (var i = 0; i  < 100; i++) {
-            stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height)))
-        }
-
-        //event handler functions
-        document.addEventListener("keydown",this.eventFunction)
-        document.addEventListener("keyup",this.eventFunction)
-
-
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
-        this.gameLoop(ctx)
+        if (!this.state.gameOver) {
+            //setup
+            var invaders = this.state.invaders
+            var ship = new Ship(this.state.width/2,this.state.height-100)
+            var stars = this.state.stars
 
-    }
+            //create invaders
+            for (var i = 0; i < 7; i++) {
+                createInvader(invaders,this.state.width-100,-500,0)
+            }
+
+            console.log(invaders)
+
+            this.setState({
+                invaders:invaders,
+                ship: ship,
+                stars:stars
+            })
+
+
+            //create background
+            for (var i = 0; i  < 100; i++) {
+                stars.push(new Star(randomX(this.state.width),randomY(-100,this.state.height)))
+            }
+
+            //event handler functions
+            document.addEventListener("keydown",this.keyboardEvents)
+            document.addEventListener("keyup",this.keyboardEvents)
+            document.addEventListener("touchstart",this.touchEvents,{passive: false})
+            document.addEventListener("touchmove",this.touchEvents)
+
+
+            this.gameLoop(ctx)
+         } else {
+             this.endLoop(ctx)
+         }
+        }
+
+
     componentDidUpdate() {
         var context = ReactDOM.findDOMNode(this).getContext('2d');
         if (!this.state.gameOver){
@@ -70,12 +87,22 @@ export default class Canvas extends React.Component {
             this.endLoop(context)
         }
     }
-    eventFunction(event) {
+
+    componentWillUnmount() {
+        document.removeEventListener("touchstart",this.touchEvents)
+        document.removeEventListener("touchmove",this.touchEvents)
+    }
+
+
+
+    //component event functions
+    keyboardEvents(event) {
         var keyCode = event.keyCode
         var eType = event.type
         var ship = this.state.ship
         var projectiles = this.state.projectiles
         var invaders = this.state.invaders
+        var test = event.changedTouches
 
 
         if (eType == "keydown" && event.repeat !=true) {
@@ -97,8 +124,8 @@ export default class Canvas extends React.Component {
 
         if (keyCode == 32 && event.repeat!=true && eType!="keyup") {
             ship.shoot(projectiles)
-            console.log(ship.image.width,ship.image.height)
         } 
+
 
         /* this.setState({
             projectiles:projectiles,
@@ -106,6 +133,32 @@ export default class Canvas extends React.Component {
         }) */
 
     }
+    touchEvents(event) {
+        var eType = event.type
+        var ship = this.state.ship
+        var projectiles = this.state.projectiles
+        var invaders = this.state.invaders
+        var touches = event.changedTouches
+    
+
+        if (eType=="touchstart") {
+            event.preventDefault()
+            ship.shoot(projectiles)
+            ty = touches.item(0).screenY
+            tx = touches.item(0).screenX
+        }
+        if (eType == "touchmove"){
+            var deltaX = (tx - touches.item(0).screenX)
+            tx = touches.item(0).screenX
+            console.log(deltaX,ship.x)
+            ship.x -=deltaX
+
+            
+        }
+    }
+
+
+    //loops
     gameLoop(context) {
         var invaders = this.state.invaders
         var ship = this.state.ship
@@ -314,6 +367,9 @@ export default class Canvas extends React.Component {
     }
     endLoop(context) {
         var stars = this.state.stars
+        for (var i = 0; i < 100; i++) {
+            stars.push(new Star(randomX(this.state.width),randomY(0,this.state.height)))
+        }
         context.fillStyle = "black"
         context.fillRect(0,0,this.state.width,this.state.height)
         context.fillStyle = "white"
@@ -321,6 +377,8 @@ export default class Canvas extends React.Component {
             stars[i].render(context)
         }
     }
+
+
     render() {
         return(
            <canvas width={this.state.width} height={this.state.height}></canvas> 
