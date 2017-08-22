@@ -1,12 +1,13 @@
 import React from "react"
 import Game from './Game.js' 
 import Menu from "./Menu.js"
+import "./main.css"
 
 export default class Main extends React.Component {
     constructor(){
         super()
         this.state = {
-            gameStarted:true
+            gameStarted:false
             }
         this.startGame = this.startGame.bind(this)
         this.endGame = this.endGame.bind(this)

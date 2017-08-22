@@ -2,6 +2,7 @@ import React from "react"
 import Canvas from "./Canvas.js"
 
 
+
 export default class Game extends React.Component {
     constructor(){
         super()
@@ -24,7 +25,7 @@ export default class Game extends React.Component {
     }
     render() {
         return(
-           <Canvas frame={this.state.frame} end={this.props.end} gameOver={false} /> 
+          <Canvas frame={this.state.frame} end={this.props.end} gameOver={false}/> 
         )
     }
 }

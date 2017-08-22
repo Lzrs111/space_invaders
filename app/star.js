@@ -2,7 +2,7 @@ import BaseClass from "./baseClass.js"
 
 export default class Star extends BaseClass{
     constructor(x,y) {
-        super(x,y,7,"none")
+        super(x,y,2,"none")
     }
 
     renderSpec(context) {

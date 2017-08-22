@@ -1,7 +1,8 @@
 TODO: 
-1. make canvas take up whole screen
 2.Menu lol 
+4. mobile events support
 3. event loop
 4. tweak numbers a bit
 5. more ammo upgrades/ammo types 
+7. meteors/turrets/shiny enemies
 6.optional: bosses?

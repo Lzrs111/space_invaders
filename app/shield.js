@@ -16,11 +16,11 @@ export default class Shield extends BaseClass {
     }
     update() {
         console.log("updating shield")
-        if (this.health <75){
-            console.log("medium")
+        if (this.health <=60){
+            console.log("medium",this.health)
             this.image.src = ShieldMedium
-        } else if (this.health <40){
-            console.log("small")
+        } else if (this.health <=20){
+            console.log("small",this.health)
             this.image.src = ShieldSmall
         } else {
             this.image.src = ShieldBig 

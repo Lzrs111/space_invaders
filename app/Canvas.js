@@ -19,8 +19,8 @@ export default class Canvas extends React.Component {
             gameOver: props.gameOver,
             invaders:[],
             ship:"",
-            width:1400,
-            height: 800,
+            width: window.innerWidth,
+            height: window.innerHeight,
             projectiles: [],
             stars: [],
             powerups: [],
@@ -35,7 +35,7 @@ export default class Canvas extends React.Component {
         var stars = this.state.stars
 
         //create invaders
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 7; i++) {
             createInvader(invaders,this.state.width-100,-500,0)
         }
 
@@ -74,7 +74,8 @@ export default class Canvas extends React.Component {
         var keyCode = event.keyCode
         var eType = event.type
         var ship = this.state.ship
-        var projectiles = this.state.projectiles 
+        var projectiles = this.state.projectiles
+        var invaders = this.state.invaders
 
 
         if (eType == "keydown" && event.repeat !=true) {
@@ -85,6 +86,10 @@ export default class Canvas extends React.Component {
                 case 39:
                     ship.xspeed = 5
                     break;
+                case 38:
+                    for (var i = 0; i < invaders.length; i++) {
+                        invaders[i].speed = 0
+                    }
             } 
         }  else if (eType == "keyup" && keyCode !=32) {
             ship.xspeed = 0
@@ -165,14 +170,14 @@ export default class Canvas extends React.Component {
         }
 
 
-        //spawn powerups
-        if ((Math.floor(Math.random()*100))>98) {
+        //spawn powerups         
+        if ((Math.floor(Math.random()*1000))>998) {
             powerups.push(new Powerup(randomX(this.state.width),10))
         }
 
-        //enemy projectiles
+         //start shooting animations
         for (var i = 0; i < invaders.length; i++) {
-            if (invaders[i].y >=0){
+            if (invaders[i].y >=-100){
                 if (invaders[i].shootFrame < 30){
                     invaders[i].shootFrame +=1
                 } else {
@@ -185,11 +190,11 @@ export default class Canvas extends React.Component {
          
 
         //detect collision
-        //enemis
+        //enemies
         for (var i = 0; i < invaders.length; i++) {
             for (var j = 0; j < projectiles.length; j++) {
                 if (detectCollision(invaders[i],projectiles[j])){
-                    invaders[i].health +=-25
+                    invaders[i].health +=-50
                     this.splashes.push(new Splash(projectiles[j].x,projectiles[j].y,"player"))
                     projectiles.splice(j,1)
                     if (invaders[i].health <= 0){
@@ -199,6 +204,7 @@ export default class Canvas extends React.Component {
                 }
             }
 
+            //enemies with player
             if (detectCollision(invaders[i],ship)) {
                     if (ship.shield){
                         ship.shield = false
@@ -209,7 +215,7 @@ export default class Canvas extends React.Component {
                     createInvader(invaders,this.state.width-100,-500,0)
             }
         }
-
+        //enemy projectiles with player
         for (var i = 0; i < enemyProjectiles.length; i++) {
             if (ship.shield) {
                 if (detectCollision(ship.shield,enemyProjectiles[i])){
@@ -230,7 +236,7 @@ export default class Canvas extends React.Component {
                 }
             
         }
-
+        //check player health after possible collision
         if (ship.health <=0){
             ship.lives -=1
             ship.health = 100
@@ -291,7 +297,14 @@ export default class Canvas extends React.Component {
         }
         //enemies
         for (var i = 0; i < invaders.length; i++) {
+            try {
+            if (invaders[i].type == "turret") {
+                invaders[i].render(context,ship)
+            }
             invaders[i].render(context)
+            } catch (e) {
+                //nothing
+            }
         }
         //powerups
         for (var i = 0; i < powerups.length; i++) {
