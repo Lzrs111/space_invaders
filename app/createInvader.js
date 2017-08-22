@@ -1,4 +1,5 @@
 import Invader from "./invader.js"
+import Turret from "./turret.js"
 import {randomX,randomY} from "./random.js"
 
 
@@ -15,9 +16,9 @@ export default function createInvader(array,xwidth,ymin,ymax) {
                 invaderX = randomX(xwidth)
            } 
         }
-        array.push(new Invader(invaderX,invaderY))
+        array.push(new Turret(invaderX,invaderY))
     } else {
-        array.push(new Invader(invaderX,invaderY))
+        array.push(new Turret(invaderX,invaderY))
     }
     
 }

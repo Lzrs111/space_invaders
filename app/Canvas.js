@@ -46,11 +46,10 @@ export default class Canvas extends React.Component {
         var stars = this.state.stars
 
         //create invaders
-        for (var i = 0; i < 7; i++) {
+        for (var i = 0; i < 1; i++) {
             createInvader(invaders,this.state.width-100,-500,0)
         }
 
-        console.log(invaders)
 
         this.setState({
             invaders:invaders,
@@ -152,7 +151,6 @@ export default class Canvas extends React.Component {
         if (eType == "touchmove"){
             var deltaX = (tx - touches.item(0).screenX)
             tx = touches.item(0).screenX
-            console.log(deltaX,ship.x)
             ship.x -=deltaX
             if (ship.shield) {
                 ship.shield.x-=deltaX
@@ -248,7 +246,6 @@ export default class Canvas extends React.Component {
         }
 
         if (ship.shooting){
-            console.log(ship.shootFrames)
             ship.shootFrames+=1
             ship.shoot(projectiles)
         }
@@ -357,13 +354,10 @@ export default class Canvas extends React.Component {
         }
         //enemies
         for (var i = 0; i < invaders.length; i++) {
-            try {
             if (invaders[i].type == "turret") {
                 invaders[i].render(context,ship)
-            }
-            invaders[i].render(context)
-            } catch (e) {
-                //nothing
+            } else {
+                invaders[i].render(context) 
             }
         }
         //powerups

@@ -76,7 +76,6 @@ export default class Ship extends BaseClass{
             case "attack speed":
             if (this.attackSpeed > this.baseAttackSpeed*0.5) {
                 this.attackSpeed = this.attackSpeed - Math.floor(this.baseAttackSpeed*0.2) //attack faster 
-                console.log(this.attackSpeed)
                 break
             }
        }
