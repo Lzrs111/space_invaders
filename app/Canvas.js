@@ -38,6 +38,7 @@ export default class Canvas extends React.Component {
     }
 
     //component lifecycle methods
+    //call either gameloop or end loop
     componentDidMount() {
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
         if (!this.state.gameOver) {
@@ -70,6 +71,7 @@ export default class Canvas extends React.Component {
             document.addEventListener("keyup",this.keyboardEvents)
             document.addEventListener("touchstart",this.touchEvents,{passive: false})
             document.addEventListener("touchmove",this.touchEvents)
+            document.addEventListener("touchend",this.touchEvents)
 
 
             this.gameLoop(ctx)
@@ -88,11 +90,11 @@ export default class Canvas extends React.Component {
         }
     }
 
+    //remove touch event listeners
     componentWillUnmount() {
         document.removeEventListener("touchstart",this.touchEvents)
         document.removeEventListener("touchmove",this.touchEvents)
     }
-
 
 
     //component event functions
@@ -117,14 +119,20 @@ export default class Canvas extends React.Component {
                     for (var i = 0; i < invaders.length; i++) {
                         invaders[i].speed = 0
                     }
+                    break;
+                case 32:
+                    ship.shooting = true
+                    ship.shootFrames = ship.attackSpeed
+                    ship.shoot(projectiles)
+                    break;
             } 
         }  else if (eType == "keyup" && keyCode !=32) {
             ship.xspeed = 0
+        }  else if (eType == "keyup" && keyCode == 32) {
+            ship.shooting = false
+            ship.shootFrames = 0
         }
 
-        if (keyCode == 32 && event.repeat!=true && eType!="keyup") {
-            ship.shoot(projectiles)
-        } 
 
 
         /* this.setState({
@@ -143,6 +151,8 @@ export default class Canvas extends React.Component {
 
         if (eType=="touchstart") {
             event.preventDefault()
+            ship.shootFrames= ship.attackSpeed
+            ship.shooting = true
             ship.shoot(projectiles)
             ty = touches.item(0).screenY
             tx = touches.item(0).screenX
@@ -152,8 +162,10 @@ export default class Canvas extends React.Component {
             tx = touches.item(0).screenX
             console.log(deltaX,ship.x)
             ship.x -=deltaX
-
-            
+        }
+        if (eType == "touchend"){
+            ship.shooting = false
+            ship.shootFrames = 0
         }
     }
 
@@ -238,6 +250,12 @@ export default class Canvas extends React.Component {
                     invaders[i].shoot(enemyProjectiles)
                 }
             }
+        }
+
+        if (ship.shooting){
+            console.log(ship.shootFrames)
+            ship.shootFrames+=1
+            ship.shoot(projectiles)
         }
 
          

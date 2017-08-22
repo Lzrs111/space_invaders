@@ -10,7 +10,10 @@ export default class Ship extends BaseClass{
         this.health = 100
         this.shield = false
         this.ammo = 0,
-        this.lives =4 
+        this.lives =4,
+        this.shooting = false
+        this.shootFrames = 0,
+        this.attackSpeed = 30
 
     }
     
@@ -22,6 +25,7 @@ export default class Ship extends BaseClass{
     }
 
     shoot(array) {
+    if (this.shootFrames == this.attackSpeed) {
         switch (this.ammo) {
             case 0:
                 array.push(new Projectile((this.x+this.image.width/2)-4,this.y,"player"))
@@ -38,7 +42,8 @@ export default class Ship extends BaseClass{
             default:
                 break;
         }
-
+        this.shootFrames = 0
+    }
     }
 
     shieldUp() {
