@@ -7,14 +7,16 @@ export default class Main extends React.Component {
     constructor(){
         super()
         this.state = {
-            gameStarted:false
+            gameStarted:false,
+            mouseCoords:  []
             }
         this.startGame = this.startGame.bind(this)
         this.endGame = this.endGame.bind(this)
         
    }
-    startGame() {
+    startGame(event) {
         this.setState({
+            mouseCoords: [event.screenX,event.screenY],
             gameStarted:true
         })
     }
@@ -26,7 +28,7 @@ export default class Main extends React.Component {
     render() {
         return(
             <div>
-                {this.state.gameStarted ? <Game end={this.endGame}/> : <Menu start={this.startGame}/>}
+                {this.state.gameStarted ? <Game mouseCoords={this.state.mouseCoords} end={this.endGame}/> : <Menu start={this.startGame}/>}
             </div>            
         )
     }

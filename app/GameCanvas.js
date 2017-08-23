@@ -10,17 +10,18 @@ import Splash from "./splash.js"
 import Star from "./star.js"
 import {randomX,randomY,detectCollision} from "./random.js" 
 
+//global vars used for touch and mouse events, to store coords of previous touch/click.
+var tx = 0 //touch x 
+var ty = 0 //touch y
+var mx = 0 //mouse x
+var my = 0 // mousey
 
-var tx = 0 
-var ty = 0
-
-export default class Canvas extends React.Component {
+export default class GameCanvas extends React.Component {
     constructor(props){
         super()
         this.splashes = []
         this.state = {
             frame:props.frame,
-            gameOver: props.gameOver,
             invaders:[],
             ship:"",
             width: window.innerWidth,
@@ -32,17 +33,19 @@ export default class Canvas extends React.Component {
             touchX:0,
             touchY: 0
             }
+        
+        //bind event methods
         this.keyboardEvents = this.keyboardEvents.bind(this)
         this.touchEvents = this.touchEvents.bind(this)
-        
+        this.mouseEvents = this.mouseEvents.bind(this)
     }
 
     //component lifecycle methods
     componentDidMount() {
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
         //setup
+        var ship = new Ship(this.props.mouseCoords[0],this.state.height-100)
         var invaders = this.state.invaders
-        var ship = new Ship(this.state.width/2,this.state.height-100)
         var stars = this.state.stars
 
         //create invaders
@@ -64,21 +67,19 @@ export default class Canvas extends React.Component {
         }
 
         //event handler functions
-        if (!this.state.gameOver) {
-            document.addEventListener("keydown",this.keyboardEvents)
-            document.addEventListener("keyup",this.keyboardEvents)
-            document.addEventListener("touchstart",this.touchEvents,{passive: false})
-            document.addEventListener("touchmove",this.touchEvents)
-            document.addEventListener("touchend",this.touchEvents)
-        }
+        document.addEventListener("keydown",this.keyboardEvents)
+        document.addEventListener("keyup",this.keyboardEvents)
+        document.addEventListener("touchstart",this.touchEvents,{passive: false})
+        document.addEventListener("touchmove",this.touchEvents)
+        document.addEventListener("touchend",this.touchEvents)
+        document.addEventListener("mousedown",this.mouseEvents)
+        document.addEventListener("mousemove",this.mouseEvents)
+        document.addEventListener("mouseup",this.mouseEvents)
+        
     }
     componentDidUpdate() {
         var context = ReactDOM.findDOMNode(this).getContext('2d');
-        if (!this.state.gameOver){
-            this.gameLoop(context);
-        } else {
-            this.endLoop(context)
-        }
+        this.gameLoop(context);
     }
 
     //remove touch event listeners
@@ -161,7 +162,34 @@ export default class Canvas extends React.Component {
             ship.shootFrames = 0
         }
     }
+    mouseEvents(event) {
+        var ship = this.state.ship
+        var projectiles = this.state.projectiles
+        var invaders = this.state.invaders
 
+        if (event.type == "mousedown" && !event.repeat) {
+            ship.shootFrames= ship.attackSpeed
+            ship.shooting = true
+            ship.shoot(projectiles)
+            mx = event.screenX
+            my = event.screenY
+        }
+        if (event.type == "mousemove"){
+            var deltaX = mx - event.screenX
+            mx = event.screenX 
+            ship.x -= deltaX
+            if (ship.shield) {
+                ship.shield.x-=deltaX
+            }
+        }
+        if (event.type =="mouseup"){
+            ship.shooting = false
+            ship.shootFrames = 0
+            
+        }
+
+
+    }
 
     //loops
     gameLoop(context) {
@@ -366,20 +394,6 @@ export default class Canvas extends React.Component {
         }
 
     }
-    endLoop(context) {
-        var stars = this.state.stars
-        for (var i = 0; i < 100; i++) {
-            stars.push(new Star(randomX(this.state.width),randomY(0,this.state.height)))
-        }
-        context.fillStyle = "black"
-        context.fillRect(0,0,this.state.width,this.state.height)
-        context.fillStyle = "white"
-        for (var i = 0; i < stars.length; i++) {
-            stars[i].render(context)
-        }
-    }
-
-
     render() {
         return(
            <canvas width={this.state.width} height={this.state.height}></canvas> 

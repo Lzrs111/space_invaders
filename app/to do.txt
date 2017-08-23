@@ -3,6 +3,5 @@ Menu lol
  tweak numbers a bit
  more ammo upgrades/ammo types 
  meteors/turrets/shiny enemies
-refractor canvas.js
-add mouse events
+refractor GameCanvas.js - check if setup can be done in constructor or ComponentWillMount method
 optional: bosses?

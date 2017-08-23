@@ -1,5 +1,5 @@
 import React from "react"
-import Canvas from "./Canvas.js"
+import GameCanvas from "./GameCanvas.js"
 
 
 
@@ -25,7 +25,7 @@ export default class Game extends React.Component {
     }
     render() {
         return(
-          <Canvas frame={this.state.frame} end={this.props.end} gameOver={false}/> 
+          <GameCanvas frame={this.state.frame} end={this.props.end} mouseCoords={this.props.mouseCoords}/> 
         )
     }
 }

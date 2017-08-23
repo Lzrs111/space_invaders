@@ -1,25 +1,29 @@
 import React from "react"   
-import Canvas from "./Canvas"
+import ReactDOM from "react-dom" 
+import MenuCanvas from "./MenuCanvas"
 import "./menu.css"
 
 export default class Menu extends React.Component {
     constructor(props){
         super()
-        
         this.state = {
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
             }
+    }
+    componentDidMount() {
+        this.startButton.addEventListener("click",this.props.start)
     }
     render() {
         return(
             <div>
                 <div className = "menu">
-                    <button onClick={this.props.start} className="menuButton">
+                    <button ref={(start)=>{
+                        this.startButton = start}} className="menuButton">
                        Start game 
                     </button>    
                 </div>
-                <Canvas gameOver = {true}/> 
+                <MenuCanvas/> 
             </div>
         )
     }

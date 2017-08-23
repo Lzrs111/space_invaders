@@ -45,7 +45,6 @@ export default class Turret extends BaseClass {
         shootX = shootY*sin + shootX*cos
         this.shootCoords[1] = shootY - this.y
         this.shootCoords[0] = shootX - this.x
-        console.log(this.shootCoords)
 
     }
 }
