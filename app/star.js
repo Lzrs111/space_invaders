@@ -1,4 +1,4 @@
-import BaseClass from "./baseClass.js"
+import BaseClass from "./Game components/baseClass.js"
 
 export default class Star extends BaseClass{
     constructor(x,y) {

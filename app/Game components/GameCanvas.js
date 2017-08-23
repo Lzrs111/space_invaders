@@ -7,18 +7,18 @@ import Projectile from "./projectile.js"
 import renderUI from "./renderUI.js"
 import Ship from "./ship.js"
 import Splash from "./splash.js"
-import Star from "./star.js"
-import {randomX,randomY,detectCollision} from "./random.js" 
+import Star from "../star.js"
+import {randomX,randomY,detectCollision} from "../random.js" 
 
 //global vars used for touch and mouse events, to store coords of previous touch/click.
 var tx = 0 //touch x 
 var ty = 0 //touch y
-var mx = 0 //mouse x
-var my = 0 // mousey
 
 export default class GameCanvas extends React.Component {
     constructor(props){
         super()
+        this.mx = props.mouseCoords[0]//mouse x
+        this.my = props.mouseCoords[1] // mousey
         this.splashes = []
         this.state = {
             frame:props.frame,
@@ -30,8 +30,6 @@ export default class GameCanvas extends React.Component {
             stars: [],
             powerups: [],
             enemyProjectiles: [],
-            touchX:0,
-            touchY: 0
             }
         
         //bind event methods
@@ -171,12 +169,12 @@ export default class GameCanvas extends React.Component {
             ship.shootFrames= ship.attackSpeed
             ship.shooting = true
             ship.shoot(projectiles)
-            mx = event.screenX
-            my = event.screenY
+            this.mx = event.screenX
+            this.my = event.screenY
         }
         if (event.type == "mousemove"){
-            var deltaX = mx - event.screenX
-            mx = event.screenX 
+            var deltaX = this.mx - event.screenX
+            this.mx = event.screenX 
             ship.x -= deltaX
             if (ship.shield) {
                 ship.shield.x-=deltaX

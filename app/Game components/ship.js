@@ -1,6 +1,6 @@
 import BaseClass from "./baseClass.js"
 import Projectile from "./projectile.js"
-import shipImage from "./assets/PNG/playerShip1_blue.png" 
+import shipImage from "../assets/PNG/playerShip1_blue.png" 
 import Shield from "./shield.js"
 
 export default class Ship extends BaseClass{

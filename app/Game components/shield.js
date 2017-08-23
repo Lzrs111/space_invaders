@@ -1,7 +1,7 @@
 import BaseClass from "./baseClass.js"
-import ShieldBig from "./assets/PNG/Effects/shield3.png"
-import ShieldMedium from "./assets/PNG/Effects/shield2.png"
-import ShieldSmall from "./assets/PNG/Effects/shield1.png"
+import ShieldBig from "../assets/PNG/Effects/shield3.png"
+import ShieldMedium from "../assets/PNG/Effects/shield2.png"
+import ShieldSmall from "../assets/PNG/Effects/shield1.png"
 
 
 export default class Shield extends BaseClass {

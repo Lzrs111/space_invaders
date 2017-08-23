@@ -1,8 +1,8 @@
 import BaseClass from "./baseClass.js"
-import HealthPowerUp from "./assets/png/ui/heartIcon.png"
-import AmmoPowerUp from "./assets/png/power-ups/powerupBlue_star.png"
-import ShieldPowerUp from "./assets/png/power-ups/powerupBlue_shield.png"
-import AttackPowerUp from "./assets/png/power-ups/powerupBlue_bolt.png"
+import HealthPowerUp from "../assets/png/ui/heartIcon.png"
+import AmmoPowerUp from "../assets/png/power-ups/powerupBlue_star.png"
+import ShieldPowerUp from "../assets/png/power-ups/powerupBlue_shield.png"
+import AttackPowerUp from "../assets/png/power-ups/powerupBlue_bolt.png"
 
 var powerups = {
     0: ["health",HealthPowerUp],

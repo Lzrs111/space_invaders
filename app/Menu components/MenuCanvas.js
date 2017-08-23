@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom" 
-import Star from "./star.js"
-import {randomX,randomY,detectCollision} from "./random.js" 
+import Star from "../star.js"
+import {randomX,randomY,detectCollision} from "../random.js" 
 
 export default class MenuCanvas extends React.Component {
     constructor(props){

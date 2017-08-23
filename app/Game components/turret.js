@@ -1,6 +1,6 @@
 import BaseClass from "./baseClass.js"
-import baseImage from "./assets/png/enemies/turretRed.png"
-import gunImage from "./assets/png/enemies/turretGun.png"
+import baseImage from "../assets/png/enemies/turretRed.png"
+import gunImage from "../assets/png/enemies/turretGun.png"
 import Projectile from "./projectile.js"
 
 

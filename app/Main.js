@@ -1,6 +1,6 @@
 import React from "react"
-import Game from './Game.js' 
-import Menu from "./Menu.js"
+import Game from './Game components/Game.js' 
+import Menu from "./Menu components/Menu.js"
 import "./main.css"
 
 export default class Main extends React.Component {

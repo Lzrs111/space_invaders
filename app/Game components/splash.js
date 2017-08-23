@@ -1,6 +1,6 @@
 import BaseClass from "./baseClass.js"
-import SplashPlayer from "./assets/png/lasers/laserBlue08.png"
-import SplashEnemy from "./assets/png/lasers/laserRed08.png"
+import SplashPlayer from "../assets/png/lasers/laserBlue08.png"
+import SplashEnemy from "../assets/png/lasers/laserRed08.png"
 
 
 export default class Splash extends BaseClass {
