@@ -24,8 +24,7 @@ button:focus {
 }
 
 button:hover {
-    background: white;
+    background: #FFFBFB;
     opacity: 0.5;
     color: black;
-
 }
