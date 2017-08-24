@@ -7,9 +7,9 @@ import Projectile from "./projectile.js"
 export default class Turret extends BaseClass {
     constructor(x,y) {
         super(x,y,2,"none")
-        this.base = new Image()
+        this.image = new Image()
         this.cannon = new Image()
-        this.base.src = baseImage
+        this.image.src = baseImage
         this.cannon.src = gunImage
         this.health = 100
         this.centerCoords =[54,52] //center of image
@@ -29,7 +29,7 @@ export default class Turret extends BaseClass {
         let distanceY = target.y - cannonY
         let angle = Math.atan2(distanceY,distanceX) - Math.PI/2
 
-        context.drawImage(this.base,this.x,this.y)
+        context.drawImage(this.image,this.x,this.y)
         context.save()
         context.translate(cannonX,cannonY)
         context.rotate(angle)
