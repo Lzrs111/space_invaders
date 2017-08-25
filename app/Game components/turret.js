@@ -39,12 +39,5 @@ export default class Turret extends BaseClass {
 
         let cos = Math.cos(angle*180/Math.PI)
         let sin = Math.sin(angle*180/Math.PI)
-        let shootX = this.x + this.shootCoords[0]
-        let shootY = this.y + this.shootCoords[1]
-        shootY = shootY*cos - shootX*sin
-        shootX = shootY*sin + shootX*cos
-        this.shootCoords[1] = shootY - this.y
-        this.shootCoords[0] = shootX - this.x
-
     }
 }

@@ -6,9 +6,9 @@ import Projectile from "./projectile.js"
 
 var stats = {
     //num : [speed,health,source,[x coordinates to render projectiles],spawn chance]
-    0:[5,200,InvaderImage1,[18,50,85],80],
-    1:[7,100,InvaderImage2,[32,69],10],
-    2:[4,250,InvaderImage3,[32,62],10]
+    0:[12,100,InvaderImage1,[18,50,85],80],
+    1:[15,100,InvaderImage2,[32,69],10],
+    2:[10,150,InvaderImage3,[32,62],10]
 }
 
 
@@ -28,10 +28,14 @@ export default class Invader extends BaseClass {
         this.status = 0
         this.shootFrame = 0
         this.shootCoords = invader[3]
+        this.attackSpeed = 60 
     }
     shoot(array) {
-        for (var i = 0; i < this.shootCoords.length; i++) {
-            array.push(new Projectile(this.x + this.shootCoords[i],this.y + this.image.height,"not player"))
+        if (this.shootFrame >=this.attackSpeed){
+            for (var i = 0; i < this.shootCoords.length; i++) {
+                array.push(new Projectile(this.x + this.shootCoords[i],this.y + this.image.height,"not player"))
+            }
+            this.shootFrame = 0
         }
     }
 }

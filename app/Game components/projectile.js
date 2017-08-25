@@ -7,7 +7,7 @@ export default class Projectile extends BaseClass {
         if (source == "player"){
             super(x,y,-10,projectileSrc)
         } else {
-            super(x,y,10,enemyProjectileSrc)
+            super(x,y,20,enemyProjectileSrc)
         }
     }
 }

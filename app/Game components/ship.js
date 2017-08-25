@@ -1,11 +1,10 @@
 import BaseClass from "./baseClass.js"
 import Projectile from "./projectile.js"
-import shipImage from "../assets/PNG/playerShip1_blue.png" 
 import Shield from "./shield.js"
 
 export default class Ship extends BaseClass{
-    constructor(x,y) {
-        super(x,y,0,shipImage)
+    constructor(x,y,src) {
+        super(x,y,0,src)
         this.xspeed = 0
         this.health = 100
         this.shield = false
@@ -13,8 +12,8 @@ export default class Ship extends BaseClass{
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
-        this.baseAttackSpeed = 30
-        this.attackSpeed = 30
+        this.baseAttackSpeed = 10 
+        this.attackSpeed = 10
 
     }
     

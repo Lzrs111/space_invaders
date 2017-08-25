@@ -1,12 +1,13 @@
 .menu {
     z-index: 99;
-    background: transparent;
     position: absolute;
+    background: #03031B;
     top: 25%;
     left: 35.5%;
     width: 25%;
     height: 50%;
     border: 5px solid white;
+    overflow: hidden
 }
 
 

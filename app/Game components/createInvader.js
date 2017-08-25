@@ -17,9 +17,9 @@ export default function createInvader(array,xwidth,ymin,ymax) {
                 invaderX = randomX(xwidth)
            } 
         }
-        array.push(new Turret(invaderX,invaderY))
+        array.push(new Invader(invaderX,invaderY))
     } else {
-        array.push(new Turret(invaderX,invaderY))
+        array.push(new Invader(invaderX,invaderY))
     }
     
 }

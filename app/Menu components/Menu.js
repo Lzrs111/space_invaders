@@ -21,7 +21,6 @@ export default class Menu extends React.Component {
         
     }
     renderChange(num) {
-        console.log(num)
         this.setState({
             render: num 
         })
@@ -33,7 +32,7 @@ export default class Menu extends React.Component {
                 break;
         
             case 1:
-                return <Settings renderChange={this.renderChange}/>
+                return <Settings renderChange={this.renderChange} switch={this.props.switch}/>
                 break;
 
             case 2:

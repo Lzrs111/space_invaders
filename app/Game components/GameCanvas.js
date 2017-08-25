@@ -42,12 +42,12 @@ export default class GameCanvas extends React.Component {
     componentDidMount() {
         var ctx = ReactDOM.findDOMNode(this).getContext("2d")
         //setup
-        var ship = new Ship(this.props.mouseCoords[0],this.state.height-100)
+        var ship = new Ship(this.props.mouseCoords[0],this.state.height-100,this.props.ship)
         var invaders = this.state.invaders
         var stars = this.state.stars
 
         //create invaders
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 20; i++) {
             createInvader(invaders,this.state.width-100,-500,0)
         }
 
@@ -112,6 +112,7 @@ export default class GameCanvas extends React.Component {
                     break;
                 case 32:
                     ship.shooting = true
+                    ship.y+=5
                     ship.shootFrames = ship.attackSpeed
                     ship.shoot(projectiles)
                     break;
@@ -121,6 +122,7 @@ export default class GameCanvas extends React.Component {
         }  else if (eType == "keyup" && keyCode == 32) {
             ship.shooting = false
             ship.shootFrames = 0
+            ship.y+=-5
         }
 
 
@@ -168,6 +170,7 @@ export default class GameCanvas extends React.Component {
         if (event.type == "mousedown" && !event.repeat) {
             ship.shootFrames= ship.attackSpeed
             ship.shooting = true
+            ship.y+=5
             ship.shoot(projectiles)
             this.mx = event.screenX
             this.my = event.screenY
@@ -183,6 +186,7 @@ export default class GameCanvas extends React.Component {
         if (event.type =="mouseup"){
             ship.shooting = false
             ship.shootFrames = 0
+            ship.y+=-5
             
         }
 
@@ -261,15 +265,12 @@ export default class GameCanvas extends React.Component {
 
          //start shooting animations
         for (var i = 0; i < invaders.length; i++) {
-            if (invaders[i].y >=-100){
-                if (invaders[i].shootFrame < 30){
-                    invaders[i].shootFrame +=1
-                } else {
-                    invaders[i].shootFrame = 0
-                    invaders[i].shoot(enemyProjectiles)
+            if (invaders[i].y >=-200){
+                invaders[i].shootFrame++
+                invaders[i].shoot(enemyProjectiles)
                 }
             }
-        }
+        
 
         if (ship.shooting){
             ship.shootFrames+=1
@@ -285,6 +286,7 @@ export default class GameCanvas extends React.Component {
                 if (detectCollision(invaders[i],projectiles[j])){
                     invaders[i].health +=-50
                     this.splashes.push(new Splash(projectiles[j].x,projectiles[j].y,"player"))
+                    invaders[i].y-=5
                     projectiles.splice(j,1)
                     if (invaders[i].health <= 0){
                         invaders.splice(i,1)

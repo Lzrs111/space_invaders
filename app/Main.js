@@ -1,6 +1,7 @@
 import React from "react"
 import Game from './Game components/Game.js' 
 import Menu from "./Menu components/Menu.js"
+import ShipDefault from "./assets/PNG/playerShip1_blue.png"
 import "./main.css"
 
 export default class Main extends React.Component {
@@ -8,15 +9,27 @@ export default class Main extends React.Component {
         super()
         this.state = {
             gameStarted:false,
-            mouseCoords:  []
+            mouseCoords:  [],
+            shipSrc: ShipDefault
             }
         this.startGame = this.startGame.bind(this)
         this.endGame = this.endGame.bind(this)
+        this.shipSwitch = this.shipSwitch.bind(this)
+        
         
    }
     startGame(event) {
+        let x, y
+        
+        if (event.type == "touchstart"){
+            x = event.touches.item(0).screenX
+            y = event.touches.item(0).screenY
+        } else {
+            x = event.screenX
+            y = event.screenY
+        }
         this.setState({
-            mouseCoords: [event.screenX,event.screenY],
+            mouseCoords: [x,y],
             gameStarted:true
         })
     }
@@ -25,10 +38,15 @@ export default class Main extends React.Component {
             gameStarted: false
         })
     }
+    shipSwitch(img) {
+        this.setState({
+            shipSrc:img
+        })
+    }
     render() {
         return(
             <div>
-                {this.state.gameStarted ? <Game mouseCoords={this.state.mouseCoords} end={this.endGame}/> : <Menu start={this.startGame}/>}
+                {this.state.gameStarted ? <Game ship={this.state.shipSrc} mouseCoords={this.state.mouseCoords} end={this.endGame}/> : <Menu switch={this.shipSwitch} start={this.startGame}/>}
             </div>            
         )
     }

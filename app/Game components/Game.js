@@ -25,7 +25,7 @@ export default class Game extends React.Component {
     }
     render() {
         return(
-          <GameCanvas frame={this.state.frame} end={this.props.end} mouseCoords={this.props.mouseCoords}/> 
+          <GameCanvas frame={this.state.frame} end={this.props.end} mouseCoords={this.props.mouseCoords} ship={this.props.ship}/> 
         )
     }
 }
