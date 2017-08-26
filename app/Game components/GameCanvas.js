@@ -18,8 +18,8 @@ export default class GameCanvas extends React.Component {
         //these are used for mouse and touch events
         this.mx = props.mouseCoords[0]//mouse x
         this.my = props.mouseCoords[1] // mousey
-        var tx = 0 //touch x 
-        var ty = 0 //touch y
+        this.tx = 0 //touch x 
+        this.ty = 0 //touch y
 
         //these are used as containers for various classes; self explanatory by name
         this.splashes = []
@@ -179,7 +179,7 @@ export default class GameCanvas extends React.Component {
         }
     }
 
-    //loops
+    //main game loop, one frame = one iteration
     gameLoop(context) {
         var invaders = this.invaders
         var ship = this.ship
@@ -263,7 +263,7 @@ export default class GameCanvas extends React.Component {
 				ship.shoot(projectiles)
 			}
 
-			//2.3 splash lifecycle
+			//2.3 splash lifecycle; splashes should last for 10 frames
 			if (this.splashes.length > 0){
 				for (var i = 0; i < this.splashes.length; i++) {
 					this.splashes[i].lifespan+=1

@@ -10,11 +10,11 @@ export default class Ship extends BaseClass{
         this.xspeed = 0
         this.health = 100
         this.shield = false
-        this.ammo = 0,
+        this.ammo = 4,
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
-        this.baseAttackSpeed = 10 
+        this.baseAttackSpeed = 30 
         this.attackSpeed = this.baseAttackSpeed
     }
     
@@ -32,13 +32,26 @@ export default class Ship extends BaseClass{
                 this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
                 break;
             case 1:
-                this.createProjectile(this.x,this.y,90,array)
-                this.createProjectile(this.x + this.image.width,this.y,90,array)
+                this.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
+                this.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
                 break
             case 2:
                 this.createProjectile(this.x,this.y,110,array)
                 this.createProjectile(this.x + this.image.width,this.y,70,array)
                 this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                break
+            case 3:
+                this.createProjectile(this.x,this.y,110,array)
+                this.createProjectile(this.x + this.image.width,this.y,70,array)
+                this.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
+                this.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
+                break
+            case 4:
+                this.createProjectile(this.x,this.y,110,array)
+                this.createProjectile(this.x + this.image.width,this.y,70,array)
+                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                this.createProjectile((this.x+this.image.width/4),this.y,100,array)
+                this.createProjectile((this.x+3*this.image.width/4),this.y,80,array)
                 break
             default:
                 break;
@@ -71,7 +84,7 @@ export default class Ship extends BaseClass{
                 this.health +=20
                 break;
             case "ammo upgrade":
-                if (this.ammo <2){
+                if (this.ammo <4){
                     this.ammo +=1
                 }
                 break;
