@@ -47,7 +47,7 @@ export default class GameCanvas extends React.Component {
         var stars = this.state.stars
 
         //create invaders
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 10; i++) {
             createInvader(invaders,this.state.width-100,-500,0)
         }
 

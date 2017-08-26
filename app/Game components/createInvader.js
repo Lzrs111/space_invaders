@@ -6,20 +6,22 @@ import {randomX,randomY} from "../random.js"
 
 export default function createInvader(array,xwidth,ymin,ymax) {
     // create random coords
-    var invaderX = randomX(xwidth)
-    var invaderY = randomY(ymin,ymax)
+    let x = randomX(xwidth)
+    let y = randomY(ymin,ymax)
+    let chance = Math.floor(Math.random()*99)
+
 
     /*if there are already created invaders, check if our newly created x coord clashes with already created xcoords
     if there is no clashing, create a new invader, otherwise generate new coords until there is no clashing*/
     if (array.length > 0) {
         for (var i = 0; i < array.length; i++) {
-           while (compareNumbers(array[i].x,invaderX)==true) {
-                invaderX = randomX(xwidth)
+           while (compareNumbers(array[i].x,x)==true) {
+                x = randomX(xwidth)
            } 
         }
-        array.push(new Invader(invaderX,invaderY))
+        array.push((chance > 80) ? new Turret(x,y) : new Invader(x,y))
     } else {
-        array.push(new Invader(invaderX,invaderY))
+        array.push((chance > 80) ? new Turret(x,y) : new Invader(x,y))
     }
     
 }

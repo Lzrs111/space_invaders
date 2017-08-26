@@ -1,8 +1,7 @@
 import BaseClass from "./baseClass.js"
 import baseImage from "../assets/png/enemies/turretRed.png"
 import gunImage from "../assets/png/enemies/turretGun.png"
-import Projectile from "./projectile.js"
-
+import TurretProjectile from "./TurretProjectile.js"
 
 export default class Turret extends BaseClass {
     constructor(x,y) {
@@ -13,31 +12,52 @@ export default class Turret extends BaseClass {
         this.cannon.src = gunImage
         this.health = 100
         this.centerCoords =[54,52] //center of image
-        this.shootCoords = [58,98] //end of cannon
         this.shootFrame = 0
+        this.attackSpeed = 30 
         this.type = "turret"
+
+        this.cannonX = this.x + this.centerCoords[0]
+        this.cannonY = this.x + this.centerCoords[1]
+        this.angle = 0
+        this.cos = 0
+        this.sin = 0
     }
     
     shoot(array) {
-        array.push(new Projectile(this.x+this.shootCoords[0],this.y+this.shootCoords[1],"not player"))
+        if (this.shootFrame >= this.attackSpeed){
+            array.push(new TurretProjectile(this.cannonX,this.cannonY,this.cos,this.sin,this.angle))
+            this.shootFrame = 0
+        }
     }
     
     render(context,target) {
-        let cannonX = this.x + this.centerCoords[0]
-        let cannonY = this.y + this.centerCoords[1] 
-        let distanceX = target.x - cannonX
-        let distanceY = target.y - cannonY
-        let angle = Math.atan2(distanceY,distanceX) - Math.PI/2
 
+        //update cannon render points
+        this.cannonX = this.x + this.centerCoords[0]
+        this.cannonY = this.y + this.centerCoords[1] 
+        
+        //distance to ship and angle
+        let distanceX = target.x+50 - this.cannonX
+        let distanceY = target.y+50 - this.cannonY
+        let angle = Math.atan2(distanceY,distanceX) - Math.PI/2 //<--- initial angle of cannon is subtracted since the image is rotated at 90deg
+        this.angle = angle
+        
+        //draw base of turret
         context.drawImage(this.image,this.x,this.y)
         context.save()
-        context.translate(cannonX,cannonY)
+        //translate content to center of image
+        context.translate(this.cannonX,this.cannonY)
+        //rotate by angle
         context.rotate(angle)
-        context.translate(-cannonX,-cannonY)
-        context.drawImage(this.cannon,cannonX,cannonY)
+        //return to 0,0
+        context.translate(-this.cannonX,-this.cannonY)
+        //draw image
+        context.drawImage(this.cannon,this.cannonX,this.cannonY)
         context.restore()
 
-        let cos = Math.cos(angle*180/Math.PI)
-        let sin = Math.sin(angle*180/Math.PI)
+        this.cos = Math.cos(angle+ Math.PI/2) 
+        this.sin = Math.sin(angle + Math.PI/2)
+     
+
     }
 }
