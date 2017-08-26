@@ -22,8 +22,8 @@ export default class Main extends React.Component {
         let x, y
         
         if (event.type == "touchstart"){
-            x = event.touches.item(0).screenX
-            y = event.touches.item(0).screenY
+            x = window.innerWidth/2 
+            y = window.innerHeight - 100
         } else {
             x = event.screenX
             y = event.screenY

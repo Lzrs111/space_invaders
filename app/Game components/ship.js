@@ -1,5 +1,7 @@
 import BaseClass from "./baseClass.js"
+import {degToRad} from "../random.js"
 import Projectile from "./projectile.js"
+import ProjectilePlus from "./projectileplus.js"
 import Shield from "./shield.js"
 
 export default class Ship extends BaseClass{
@@ -13,8 +15,7 @@ export default class Ship extends BaseClass{
         this.shooting = false
         this.shootFrames = 0,
         this.baseAttackSpeed = 10 
-        this.attackSpeed = 10
-
+        this.attackSpeed = this.baseAttackSpeed
     }
     
     move() {
@@ -28,16 +29,16 @@ export default class Ship extends BaseClass{
     if (this.shootFrames == this.attackSpeed) {
         switch (this.ammo) {
             case 0:
-                array.push(new Projectile((this.x+this.image.width/2)-4,this.y,"player"))
+                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
                 break;
             case 1:
-                array.push(new Projectile(this.x,this.y,"player"))
-                array.push(new Projectile(this.x + this.image.width,this.y,"player"))
+                this.createProjectile(this.x,this.y,90,array)
+                this.createProjectile(this.x + this.image.width,this.y,90,array)
                 break
             case 2:
-                array.push(new Projectile(this.x,this.y,"player"))
-                array.push(new Projectile(this.x + this.image.width,this.y,"player"))
-                array.push(new Projectile((this.x+this.image.width/2)-4,this.y,"player"))
+                this.createProjectile(this.x,this.y,110,array)
+                this.createProjectile(this.x + this.image.width,this.y,70,array)
+                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
                 break
             default:
                 break;
@@ -50,6 +51,11 @@ export default class Ship extends BaseClass{
         let x = this.x -25 
         let y = this.y -25
         this.shield = new Shield(x,y)
+    }
+
+
+    createProjectile(x,y,deg,array) {
+        return array.push(new ProjectilePlus(x,y,Math.cos(degToRad(deg)),-Math.sin(degToRad(deg)),degToRad(-(deg-90)),"player"))
     }
 
     render(context) {

@@ -1,13 +1,12 @@
-import enemyProjectileSrc from "../assets/PNG/lasers/laserRed05.png"
 import Projectile from "./projectile.js"
 
 
-export default class TurretProjectile extends Projectile {
-    constructor(x,y,xs,ys,angle) {
-        super(x,y,"not player")
+//this projectile shoots at an angle, regular projectiles shoot straight
+export default class ProjectilePlus extends Projectile {
+    constructor(x,y,xs,ys,angle,src) {
+        super(x,y,src)
         this.xs = xs
         this.ys = ys
-        this.image.src = enemyProjectileSrc
         this.angle = angle
     }
      

@@ -1,7 +1,7 @@
 import BaseClass from "./baseClass.js"
 import baseImage from "../assets/png/enemies/turretRed.png"
 import gunImage from "../assets/png/enemies/turretGun.png"
-import TurretProjectile from "./TurretProjectile.js"
+import ProjectilePlus from "./projectileplus.js"
 
 export default class Turret extends BaseClass {
     constructor(x,y) {
@@ -25,7 +25,7 @@ export default class Turret extends BaseClass {
     
     shoot(array) {
         if (this.shootFrame >= this.attackSpeed){
-            array.push(new TurretProjectile(this.cannonX,this.cannonY,this.cos,this.sin,this.angle))
+            array.push(new ProjectilePlus(this.cannonX,this.cannonY,this.cos,this.sin,this.angle,"not player"))
             this.shootFrame = 0
         }
     }

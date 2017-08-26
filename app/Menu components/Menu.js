@@ -45,14 +45,14 @@ export default class Menu extends React.Component {
     }
     render() {
         return(
-            <div>
+            <div className="mobile">
                 <div className = "menu">
                     <div className="title">
                        Mario's super gay space adventure 
                     </div>
                     {this.renderMenu(this.state.render)}
                 </div>
-                <MenuCanvas/> 
+                {(window.innerWidth > 480) ? <MenuCanvas/> : ""}
             </div>
         )
     }

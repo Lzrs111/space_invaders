@@ -22,4 +22,9 @@ function detectCollision(first,second) {
 }
 
 
-module.exports = {randomX,randomY,detectCollision}
+function degToRad(deg) {
+    return deg * Math.PI/180
+}
+
+
+module.exports = {randomX,randomY,detectCollision,degToRad}

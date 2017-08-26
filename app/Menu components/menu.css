@@ -10,7 +10,6 @@
     overflow: hidden
 }
 
-
 .menuButton {
     background: transparent;
     border: 2px solid white;
@@ -28,4 +27,32 @@ button:hover {
     background: #FFFBFB;
     opacity: 0.5;
     color: black;
+}
+
+.mobile {
+ width: auto;
+ height: auto
+}
+
+@media screen and (max-width:480px) {
+   .mobile {
+       height: 100%;
+       width: 100%
+   } 
+
+   .menu {
+       position: static;
+       height: 100vh;
+       width: 100vw
+   }
+
+   .menuButton {
+       width: 100%;
+       height: 20%;
+       margin-left: 0
+   }
+
+   .title {
+       height: 20%;
+   }
 }
