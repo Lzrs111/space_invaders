@@ -3,19 +3,21 @@
     position: absolute;
     background: #03031B;
     top: 25%;
-    left: 35.5%;
-    width: 25%;
-    height: 50%;
+    left: 40%;
+    width: 20%;
+    height: 40%;
     border: 5px solid white;
     overflow: hidden
 }
 
 .menuButton {
+    margin-top: 10%;
     background: transparent;
     border: 2px solid white;
     display: block;
     color: white;
     width: 90%;
+    height: 10%;
     margin-left: 5%;
 }
 
@@ -32,6 +34,11 @@ button:hover {
 .mobile {
  width: auto;
  height: auto
+}
+
+.title {
+    color: white;
+    margin-bottom: 10%;
 }
 
 @media screen and (max-width:480px) {

@@ -44,11 +44,12 @@ export default class Menu extends React.Component {
         }
     }
     render() {
+        let titles = ["Generic space shooter","Customize ship","Help","About"]
         return(
             <div className="mobile">
                 <div className = "menu">
                     <div className="title">
-                       Mario's super gay space adventure 
+                       {titles[this.state.render]} 
                     </div>
                     {this.renderMenu(this.state.render)}
                 </div>

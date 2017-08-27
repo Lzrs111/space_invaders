@@ -26,6 +26,8 @@ export default class Settings extends React.Component {
             index: 0
         }
         this.colorSwitch = this.colorSwitch.bind(this)
+        this.renderPictureAndColor = this.renderPictureAndColor.bind(this)
+        
     }
     colorSwitch(index) {
         this.setState({
@@ -47,19 +49,44 @@ export default class Settings extends React.Component {
         })
     }
     }
-    render() {
+    renderPictureAndColor() {
+        //depending on screen size, render elements accordingly
         let colors = ["36bbf5","71c937","de532c","ac3939"]
-        return(
-                <div style={{width: "100%", height:"100%"}}>
+        if (window.innerWidth > 480){
+            return (
+                <div className="pictureAndColor">
                     <div className="pictureFrame">
                         <img className="image" src={this.ships[this.state.ship][this.state.index]}/>
                     </div>
                     <div className ="colorPick">
-                       {colors.map((value,index)=>{
-                           return <div className="color" onClick={()=>{
-                               this.colorSwitch(index)}} style={{backgroundColor:"#" + value}}>
-                           </div>})} 
+                    {colors.map((value,index)=>{
+                        return <div className="color" onClick={()=>{
+                            this.colorSwitch(index)}} style={{backgroundColor:"#" + value}}>
+                        </div>})} 
                     </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="pictureAndColor">
+                    <div className ="colorPick">
+                    {colors.map((value,index)=>{
+                        return <div className="color" onClick={()=>{
+                            this.colorSwitch(index)}} style={{backgroundColor:"#" + value}}>
+                        </div>})} 
+                    </div>
+                    <div className="pictureFrame">
+                        <img className="image" src={this.ships[this.state.ship][this.state.index]}/>
+                    </div>
+                </div>
+            )
+        }
+
+    }
+    render() {
+        return(
+                <div style={{width: "100%", height:"100%"}}>
+                    {this.renderPictureAndColor()}
                     <div className = "switch">
                         <button className="shipButton" onClick={()=>{
                             this.shipSwitch(-1)}}>

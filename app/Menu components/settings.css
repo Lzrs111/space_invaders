@@ -6,17 +6,27 @@ html {
   }
 
 
+.pictureAndColor {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 .pictureFrame {
     width:60%;
     height: 30%;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
+    border: solid 2px white;
 }
 
 .colorPick {
     display: inline-block;
     width: 20%;
-    height:30%;
+    height:25%;
+    border: solid 2px white;
 }
 
 .color {
@@ -35,10 +45,42 @@ html {
     display: inline-block;
     background-color: transparent;
     color: white;
-    font-size: 100%
+    font-size: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .switch {
-    width: 80%;
-    text-align: center
+    width: 60%;
+    text-align: center;
+    margin-left: 5%
+}
+
+
+@media screen and (max-width:480px) {
+    .pictureAndColor {
+        display: block;
+        width: 100%;
+    }
+
+    .colorPick {
+        display: block;
+        width: 100%;
+        height: 10%;
+    }
+
+    .color {
+        display: inline-block;
+        height: 100%;
+        width: 25%
+    }
+
+
+    .pictureFrame {
+        display: flex;
+        width: 100%;
+        align-content: center;
+        justify-content: center
+    }
+
 }

@@ -12,7 +12,7 @@ export default class MainMenu extends React.Component {
         this.startButton.addEventListener("touchstart",this.props.start)
     }
     render() {
-        var buttons = ["Settings","Help","About"]
+        var buttons = ["Customize ship","Help","About"]
         return(
             <div>
                 <button ref={(start)=>{this.startButton = start}} className="menuButton">
