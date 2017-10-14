@@ -26,6 +26,7 @@ export default class Menu extends React.Component {
         })
     }
     renderMenu(num) {
+        //based on render state determine which menu will be rendered
         switch (num) {
             case 0:
                 return <MainMenu start={this.props.start} renderChange={this.renderChange}/>

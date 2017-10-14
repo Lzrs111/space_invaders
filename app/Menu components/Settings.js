@@ -17,6 +17,7 @@ export default class Settings extends React.Component {
     constructor(){
         super()
         this.ships= {
+            //ship model: [ship color 1, ship color 2,...]
             1: [playerShip1Blue,playerShip1Green,playerShip1Orange,playerShip1Red], 
             2: [playerShip2Blue,playerShip2Green,playerShip2Orange,playerShip2Red], 
             3: [playerShip3Blue,playerShip3Green,playerShip3Orange,playerShip3Red], 
@@ -30,11 +31,13 @@ export default class Settings extends React.Component {
         
     }
     colorSwitch(index) {
+        //change color of ship
         this.setState({
             index:index
         })
     }
     shipSwitch(num) {
+        //change model of ship
         if (this.state.ship == 3 && num == +1){
            this.setState({
                ship:1
@@ -101,7 +104,9 @@ export default class Settings extends React.Component {
                         </button>
                     </div>
                 <button className="menuButton" onClick={()=>{
+                    //pass ship image src back to Main component
                     this.props.switch(this.ships[this.state.ship][this.state.index])
+                    //render Main Menu
                    this.props.renderChange(0)}}>
                     Save and back to main
                 </button>

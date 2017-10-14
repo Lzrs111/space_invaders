@@ -29,29 +29,29 @@ export default class Ship extends BaseClass{
     if (this.shootFrames == this.attackSpeed) {
         switch (this.ammo) {
             case 0:
-                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
                 break;
             case 1:
-                this.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
-                this.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
+                Ship.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
+                Ship.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
                 break
             case 2:
-                this.createProjectile(this.x,this.y,110,array)
-                this.createProjectile(this.x + this.image.width,this.y,70,array)
-                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                Ship.createProjectile(this.x,this.y,110,array)
+                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
+                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
                 break
             case 3:
-                this.createProjectile(this.x,this.y,110,array)
-                this.createProjectile(this.x + this.image.width,this.y,70,array)
-                this.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
-                this.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
+                Ship.createProjectile(this.x,this.y,110,array)
+                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
+                Ship.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
+                Ship.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
                 break
             case 4:
-                this.createProjectile(this.x,this.y,110,array)
-                this.createProjectile(this.x + this.image.width,this.y,70,array)
-                this.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
-                this.createProjectile((this.x+this.image.width/4),this.y,100,array)
-                this.createProjectile((this.x+3*this.image.width/4),this.y,80,array)
+                Ship.createProjectile(this.x,this.y,110,array)
+                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
+                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                Ship.createProjectile((this.x+this.image.width/4),this.y,100,array)
+                Ship.createProjectile((this.x+3*this.image.width/4),this.y,80,array)
                 break
             default:
                 break;
@@ -67,7 +67,7 @@ export default class Ship extends BaseClass{
     }
 
 
-    createProjectile(x,y,deg,array) {
+    static createProjectile(x,y,deg,array) {
         return array.push(new ProjectilePlus(x,y,Math.cos(degToRad(deg)),-Math.sin(degToRad(deg)),degToRad(-(deg-90)),"player"))
     }
 
