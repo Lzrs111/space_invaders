@@ -12,8 +12,8 @@ export default class ProjectilePlus extends Projectile {
     }
      
     move() {
-        this.y += this.ys*10
-        this.x +=this.xs*10
+        this.y += (this.ys*10)*getSizeRatio()
+        this.x +=this.xs*10*getSizeRatio()
     }
 
     render(context) {

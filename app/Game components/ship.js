@@ -29,29 +29,29 @@ export default class Ship extends BaseClass{
     if (this.shootFrames == this.attackSpeed) {
         switch (this.ammo) {
             case 0:
-                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                Ship.createProjectile(this.x+((this.image.width/2)-4)*getSizeRatio(),this.y,90,array)
                 break;
             case 1:
-                Ship.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
-                Ship.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
+                Ship.createProjectile(this.x+((this.image.width/2)-8)*getSizeRatio(),this.y,90,array)
+                Ship.createProjectile(this.x+((this.image.width/2)+4)*getSizeRatio(),this.y,90,array)
                 break
             case 2:
                 Ship.createProjectile(this.x,this.y,110,array)
-                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
-                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
+                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,70,array)
+                Ship.createProjectile(this.x+((this.image.width/2)-4)*getSizeRatio(),this.y,90,array)
                 break
             case 3:
                 Ship.createProjectile(this.x,this.y,110,array)
-                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
-                Ship.createProjectile((this.x+this.image.width/2)-8,this.y,90,array)
-                Ship.createProjectile((this.x+this.image.width/2)+4,this.y,90,array)
+                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,70,array)
+                Ship.createProjectile(this.x+((this.image.width/2)-8)*getSizeRatio(),this.y,90,array)
+                Ship.createProjectile(this.x+((this.image.width/2)+4)*getSizeRatio(),this.y,90,array)
                 break
             case 4:
                 Ship.createProjectile(this.x,this.y,110,array)
-                Ship.createProjectile(this.x + this.image.width,this.y,70,array)
-                Ship.createProjectile((this.x+this.image.width/2)-4,this.y,90,array)
-                Ship.createProjectile((this.x+this.image.width/4),this.y,100,array)
-                Ship.createProjectile((this.x+3*this.image.width/4),this.y,80,array)
+                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,70,array)
+                Ship.createProjectile(this.x+((this.image.width/2)-4)*getSizeRatio(),this.y,90,array)
+                Ship.createProjectile(this.x+(this.image.width/4)*getSizeRatio(),this.y,100,array)
+                Ship.createProjectile(this.x+3*(this.image.width/4)*getSizeRatio(),this.y,80,array)
                 break
             default:
                 break;
