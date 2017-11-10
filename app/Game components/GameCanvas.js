@@ -8,7 +8,7 @@ import renderUI from "./renderUI.js"
 import Ship from "./ship.js"
 import Splash from "./splash.js"
 import Star from "../star.js"
-import {randomX,randomY,detectCollision} from "../random.js" 
+import {randomX,randomY,detectCollision,getSizeRatio} from "../random.js" 
 
 
 export default class GameCanvas extends React.Component {
@@ -28,7 +28,7 @@ export default class GameCanvas extends React.Component {
         this.powerups =  []
         this.enemyProjectiles = []
         this.invaders = []
-        this.ship = new Ship(props.mouseCoords[0],window.innerHeight-100,props.ship)
+        this.ship = new Ship(props.mouseCoords[0],window.innerHeight-(100*getSizeRatio()),props.ship)
 
 
         //states...frame is constantly updated which triggers a new animation frame. Not sure if react + canvas go together so well though
@@ -36,12 +36,13 @@ export default class GameCanvas extends React.Component {
             frame:props.frame,
             width: window.innerWidth,
             height: window.innerHeight,
+            orientation: window.screen.orientation.type
             }
 
         //setup - create background and initial enemies
 
             //create invaders
-            for (var i = 0; i < 1; i++) {
+            for (var i = 0; i < 5; i++) {
                 createInvader(this.invaders,this.state.width-100,-500,0)
             }
 
@@ -71,7 +72,17 @@ export default class GameCanvas extends React.Component {
         
     }
     componentDidUpdate() {
-        //when component updates (this.state.frame) call game loop
+        //when component updates (this.state.frame) check if screen was rotated and call game loop
+        //screen rotation is still buggy 
+        if (this.state.orientation != window.screen.orientation.type) {
+            this.ship.y = window.innerHeight-(100*getSizeRatio()) 
+            this.setState({
+                orientation: window.screen.orientation.type,
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
+
         var context = ReactDOM.findDOMNode(this).getContext('2d');
         this.gameLoop(context);
     }
@@ -191,7 +202,7 @@ export default class GameCanvas extends React.Component {
         context.fillRect(0,0,this.state.width,this.state.height)
         context.fillStyle = "white"
     
-
+    
         //first, change positions of elements
 			//1.1 player
 			try {
@@ -232,7 +243,7 @@ export default class GameCanvas extends React.Component {
 				stars[i].move()
 				if (stars[i].y > this.state.height) {
 					stars[i].x = randomX(this.state.width)
-					stars[i].y = randomY(0,0)
+					stars[i].y = randomY(0,-100)
 				}
 			
 			}
@@ -383,7 +394,7 @@ export default class GameCanvas extends React.Component {
 			for (var i = 0; i < powerups.length; i++) {
 				powerups[i].render(context)
 			}
-
+            
     }
     render() {
         return(

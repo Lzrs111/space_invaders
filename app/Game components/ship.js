@@ -1,5 +1,5 @@
 import BaseClass from "./baseClass.js"
-import {degToRad} from "../random.js"
+import {degToRad,getSizeRatio} from "../random.js"
 import Projectile from "./projectile.js"
 import ProjectilePlus from "./projectileplus.js"
 import Shield from "./shield.js"
@@ -10,11 +10,11 @@ export default class Ship extends BaseClass{
         this.xspeed = 0
         this.health = 100
         this.shield = false
-        this.ammo = 4,
+        this.ammo = 0,
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
-        this.baseAttackSpeed = 30 
+        this.baseAttackSpeed = 30
         this.attackSpeed = this.baseAttackSpeed
     }
     
@@ -61,8 +61,8 @@ export default class Ship extends BaseClass{
     }
 
     shieldUp() {
-        let x = this.x -25 
-        let y = this.y -25
+        let x = this.x -(25*getSizeRatio()) 
+        let y = this.y -(25*getSizeRatio())
         this.shield = new Shield(x,y)
     }
 
@@ -72,11 +72,11 @@ export default class Ship extends BaseClass{
     }
 
     render(context) {
-        context.drawImage(this.image,this.x,this.y)
-        if (this.shield){
-            context.drawImage(this.shield.image,this.shield.x,this.shield.y)
+            context.drawImage(this.image,this.x,this.y,this.image.width*getSizeRatio(), this.image.height*getSizeRatio())
+            if (this.shield){
+            context.drawImage(this.shield.image,this.shield.x,this.shield.y,this.shield.image.width*getSizeRatio(),this.shield.image.height*getSizeRatio())
+           }
         }
-    }
 
    pickup(powerup) {
        switch(powerup.type) {

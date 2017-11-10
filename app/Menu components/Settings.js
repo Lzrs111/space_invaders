@@ -55,7 +55,6 @@ export default class Settings extends React.Component {
     renderPictureAndColor() {
         //depending on screen size, render elements accordingly
         let colors = ["36bbf5","71c937","de532c","ac3939"]
-        if (window.innerWidth > 480){
             return (
                 <div className="pictureAndColor">
                     <div className="pictureFrame">
@@ -69,22 +68,6 @@ export default class Settings extends React.Component {
                     </div>
                 </div>
             )
-        } else {
-            return (
-                <div className="pictureAndColor">
-                    <div className ="colorPick">
-                    {colors.map((value,index)=>{
-                        return <div className="color" onClick={()=>{
-                            this.colorSwitch(index)}} style={{backgroundColor:"#" + value}}>
-                        </div>})} 
-                    </div>
-                    <div className="pictureFrame">
-                        <img className="image" src={this.ships[this.state.ship][this.state.index]}/>
-                    </div>
-                </div>
-            )
-        }
-
     }
     render() {
         return(

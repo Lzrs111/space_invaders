@@ -45,7 +45,7 @@ export default class Menu extends React.Component {
         }
     }
     render() {
-        let titles = ["Generic space shooter","Customize ship","Help","About"]
+        let titles = ["Super Duper Space Shooter","Customize ship","Help","About"]
         return(
             <div className="mobile">
                 <div className = "menu">
