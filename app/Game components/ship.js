@@ -10,7 +10,7 @@ export default class Ship extends BaseClass{
         this.xspeed = 0
         this.health = 100
         this.shield = false
-        this.ammo = 0,
+        this.ammo = 3,
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
@@ -36,13 +36,13 @@ export default class Ship extends BaseClass{
                 Ship.createProjectile(this.x+((this.image.width/2)+4)*getSizeRatio(),this.y,90,array)
                 break
             case 2:
-                Ship.createProjectile(this.x,this.y,110,array)
-                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,70,array)
+                Ship.createProjectile(this.x,this.y,90,array)
+                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,90,array)
                 Ship.createProjectile(this.x+((this.image.width/2)-4)*getSizeRatio(),this.y,90,array)
                 break
             case 3:
-                Ship.createProjectile(this.x,this.y,110,array)
-                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,70,array)
+                Ship.createProjectile(this.x,this.y,90,array)
+                Ship.createProjectile(this.x + (this.image.width*getSizeRatio()),this.y,90,array)
                 Ship.createProjectile(this.x+((this.image.width/2)-8)*getSizeRatio(),this.y,90,array)
                 Ship.createProjectile(this.x+((this.image.width/2)+4)*getSizeRatio(),this.y,90,array)
                 break

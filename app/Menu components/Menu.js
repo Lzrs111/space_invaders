@@ -54,7 +54,7 @@ export default class Menu extends React.Component {
                     </div>
                     {this.renderMenu(this.state.render)}
                 </div>
-                {(window.innerWidth > 480) ? <MenuCanvas/> : ""}
+                {(window.innerWidth > 800) ? <MenuCanvas/> : ""}
             </div>
         )
     }

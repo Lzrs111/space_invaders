@@ -78,15 +78,15 @@ export default class Settings extends React.Component {
                             this.shipSwitch(-1)}}>
                           {"<"}
                         </button>
-                        <p style={{display: "inline-block"}}>
-                            Ship 1
+                        <p style={{display: "inline-block",color: "white"}}>
+                            Ship {this.state.ship} 
                         </p>
                         <button className="shipButton" onClick={()=>{
                             this.shipSwitch(1)}}>
                           {">"}
                         </button>
                     </div>
-                <button className="menuButton" onClick={()=>{
+                <button className="exitButton" onClick={()=>{
                     //pass ship image src back to Main component
                     this.props.switch(this.ships[this.state.ship][this.state.index])
                     //render Main Menu

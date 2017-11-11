@@ -57,6 +57,16 @@ html {
     margin-left: 5%
 }
 
+.exitButton {
+    background: transparent;
+    border: 2px solid white;
+    display: block;
+    color: white;
+    width: 90%;
+    height: 10%;
+    margin: 5% 5% 10% 5%;
+   }
+
 
 @media screen and (max-width:480px) {
     .pictureAndColor {
@@ -64,5 +74,36 @@ html {
     }
     .colorPick {
         height: 100%;
+    }
+
+   .exitButton {
+       width: 100%;
+       height: 15%;
+       margin: 5% 0 5% 0;
+       border-left: none;
+       border-right: none;
+       border-color: grey;
+       font-size: 120%;
+   }
+}
+
+@media screen and (min-width: 481px) and (max-width: 800px) {
+    .pictureAndColor {
+        height: 50%;
+    }
+
+    .colorPick {
+        height: 100%;
+    }
+    .switch {
+        height: 15%;
+    }
+
+    .exitButton {
+        width: 100%;
+        height: 15%;
+        margin: 0;
+        border-left: none;
+        border-right: none;
     }
 }
