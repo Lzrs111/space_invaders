@@ -53,7 +53,6 @@ export default class Settings extends React.Component {
     }
     }
     renderPictureAndColor() {
-        //depending on screen size, render elements accordingly
         let colors = ["36bbf5","71c937","de532c","ac3939"]
             return (
                 <div className="pictureAndColor">

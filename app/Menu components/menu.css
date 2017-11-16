@@ -36,7 +36,7 @@ button:hover {
 }
 
 .title {
-    margin-top: 5%;
+    height: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,8 +44,8 @@ button:hover {
     font-size: 120%;
 }
 
-.buttons {
-    margin-top: 0%;
+.contentDiv {
+    height:85%
 }
 
 @media screen and (max-width:480px) {
@@ -64,8 +64,8 @@ button:hover {
 
    .menuButton {
        width: 100%;
-       height: 15%;
-       margin: 5% 0 5% 0;
+       height: 25%;
+       margin: 0;
        border-left: none;
        border-right: none;
        border-color: grey;
@@ -73,11 +73,6 @@ button:hover {
    }
 
    .title {
-       display: flex;
-       align-content: center;
-       align-items: center;
-       height: 10%;
-       margin: 10% 0 5% 0;
        font-size: 150%;
    }
 
@@ -115,12 +110,7 @@ button:hover {
    }
 
    .title {
-       width: 100%;
-       height: 20%;
-       margin: 0 0 0 0;
-       display: flex;
-       align-content: center;
-       align-items: center;
+       font-size: 120%;
    }
 
 }

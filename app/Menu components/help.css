@@ -1,0 +1,20 @@
+.buttonDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10%;
+    width: 90%;
+}
+
+.pageButton {
+    background: transparent;
+    color: white;
+}
+
+.pageButton:disabled {
+    background: grey;
+}
+
+.pageButton:disabled:hover {
+    background: grey
+}

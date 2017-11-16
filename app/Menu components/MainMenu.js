@@ -14,7 +14,7 @@ export default class MainMenu extends React.Component {
     render() {
         var buttons = ["Customize ship","Help","About"]
         return(
-            <div className="buttons">
+            <div className="contentDiv">
                 <button ref={(start)=>{this.startButton = start}} className="menuButton">
                        Start game 
                 </button>
