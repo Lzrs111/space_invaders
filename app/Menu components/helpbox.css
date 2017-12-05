@@ -2,7 +2,10 @@
     display: flex;
     height: 100%;
     width: 20%;
-    border: solid white;
+    border: solid white 3px;
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
     align-content: center;
     align-items: center;
     justify-content: center
@@ -13,7 +16,9 @@
     height: 100%;
     width: 80%;
     color: white;
-    border: solid white;
+    border: solid white 3px;
+    border-right: none;
+    border-bottom: none;
     font-size: 85%;
     text-align: center;
     align-items: center

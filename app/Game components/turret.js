@@ -13,7 +13,7 @@ export default class Turret extends BaseClass {
         this.cannon.src = gunImage
         this.health = 100
         this.shootFrame = 0
-        this.attackSpeed = 60 
+        this.attackSpeed = 75
         this.type = "turret"
 
 

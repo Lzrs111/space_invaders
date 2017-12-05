@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     height: 10%;
-    width: 90%;
+    width: 100%;
 }
 
 .pageButton {
@@ -17,4 +17,11 @@
 
 .pageButton:disabled:hover {
     background: grey
+}
+
+@media screen and (max-width: 800px) {
+    .pageButton {
+        height:100%;
+        width: 50%;
+    }
 }

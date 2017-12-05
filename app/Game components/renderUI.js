@@ -49,6 +49,8 @@ function convertToHealth(number,array) {
     heart.src = heartIcon
     shield.src = shieldIcon
 
+    console.log(lifeIcon)
+
     for (var i = 0; i < Object.keys(numerals).length; i++) {
        numberImages[i] = new Image()
        numberImages[i].src = numerals[i]

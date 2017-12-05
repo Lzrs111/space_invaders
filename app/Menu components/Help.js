@@ -4,6 +4,8 @@ import HelpPage from "./helppage.js"
 import './help.css'
 import Testimage from "../assets/PNG/power-ups/bold_silver.png"
 //image imports
+import playerShip1Blue from "../assets/PNG/playerShip1_blue.png"
+import InvaderImage1 from "../assets/PNG/Enemies/enemyBlack3.png"
 import HealthPowerUp from "../assets/png/ui/heartIcon.png"
 import AmmoPowerUp from "../assets/png/power-ups/powerupBlue_star.png"
 import ShieldPowerUp from "../assets/png/power-ups/powerupBlue_shield.png"

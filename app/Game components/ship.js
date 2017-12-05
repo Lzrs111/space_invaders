@@ -9,12 +9,12 @@ export default class Ship extends BaseClass{
         super(x,y,0,src)
         this.xspeed = 0
         this.health = 100
-        this.shield = false
+        this.shield = false 
         this.ammo = 0,
         this.lives =4,
         this.shooting = false
         this.shootFrames = 0,
-        this.baseAttackSpeed = 30
+        this.baseAttackSpeed =20 
         this.attackSpeed = this.baseAttackSpeed
     }
     

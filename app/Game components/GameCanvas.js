@@ -42,7 +42,7 @@ export default class GameCanvas extends React.Component {
         //setup - create background and initial enemies
 
             //create invaders
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 7; i++) {
                 createInvader(this.invaders,this.state.width-100,-500,0)
             }
 
@@ -256,7 +256,7 @@ export default class GameCanvas extends React.Component {
 
 		//2 random stuff
 	        //2.1 spawn powerups         
-        	if ((Math.floor(Math.random()*100))>98) {
+        	if ((Math.floor(Math.random()*10000))>9900) {
         	    powerups.push(new Powerup(randomX(this.state.width),10))
         	}
 
