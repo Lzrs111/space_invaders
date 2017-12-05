@@ -12,21 +12,18 @@ import AttackPowerUp from "../assets/png/power-ups/powerupBlue_bolt.png"
 export default class Help extends React.Component {
     constructor(){
         super()
-        var images = new Array(4)
-        images.fill(Testimage)
         this.state = {
-            content: [
-                "Move the ship with mouse,keyboard or with your finger.",
-                "Try to hit the enemy with your projectiles while avoiding theirs",
-                "Your health and shield is displayed in the upper right corner. Lives are displayed in the upper left corner",
-                "Once your health is depleted you will lose a life. Lose all lives and it's game over",
-                "Health powerup. Pick this up to restore 20HP",
-                "Shield powerup. Pick this up to restore shield to 100 points",
-                "Weapon powerup. Pick this up to upgrade your weapon",
-                "Attack speed powerup. Pick this up to increase your attack speed"
-            ],
+            content: { 
+              0:  ["Move the ship with mouse,keyboard or with your finger.", Testimage],
+              1:  ["Try to hit the enemy with your projectiles while avoiding theirs",Testimage],
+              2:  ["Your health and shield is displayed in the upper right corner. Lives are displayed in the upper left corner",Testimage],
+              3:  ["Once your health is depleted you will lose a life. Lose all lives and it's game over",Testimage],
+              4:  ["Health powerup. Pick this up to restore 20HP",HealthPowerUp],
+              5:  ["Shield powerup. Pick this up to restore shield to 100 points",ShieldPowerUp],
+              6:  ["Weapon powerup. Pick this up to upgrade your weapon",AmmoPowerUp],
+              7:  ["Attack speed powerup. Pick this up to increase your attack speed",AttackPowerUp],
+            },
             pages: 2,
-            images: images,
             activePage: 1
         }
         this.renderPage = this.renderPage.bind(this)
@@ -40,8 +37,7 @@ export default class Help extends React.Component {
             temporary.push(this.state.content[count])
             count++
         }
-        console.log(temporary)
-        return <HelpPage images={this.state.images} content={temporary}/>
+        return <HelpPage content={temporary}/>
     }
     pageSwitch(x) {
         this.setState({

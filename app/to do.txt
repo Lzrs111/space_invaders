@@ -1,6 +1,2 @@
-TODO: 
-Menu lol 
- tweak numbers a bit
- more ammo upgrades/ammo types 
- meteors/turrets/shiny enemies
-optional: bosses?
+dodati slike u help
+mobile help?
